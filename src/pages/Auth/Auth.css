@@ -1,0 +1,25 @@
+.page {
+  box-sizing: border-box;
+  padding: 40px 80px;
+  overflow-y: auto;
+}
+
+.authContainer {
+  display: flex;
+}
+
+.authForm {
+  padding: 20px;
+  box-shadow: 1px 1px 10px rgba(0,0,0,.3);
+  box-sizing: border-box;
+  background: var(--whiteText);
+  border-radius: 12px;
+  min-width: 600px;
+}
+
+.switcher {
+  font-size: 17px;
+  color: var(--dateText);
+  margin: 20px 0;
+  cursor: pointer;
+}

@@ -1,0 +1,28 @@
+:root {
+  --navBg: #f9f3fe;
+  --mainText: #47444A;
+  --secondaryText: #333333;
+  --navUnderline: #690ecc;
+  --toolbarBtn: #F4D19B;
+  --toolbarBtnBorder: #CC810E;
+  --controlBtnBorder: #7338AC;
+  --controlBtnBg: #F0D9FF;
+  --activityCard: #F3F1F5;
+  --whiteText: #FEFEFE;
+  --categoryBg: #7338AC;
+  --loaderColor: #7338AC;
+  --dateText: #626262;
+  --formBorder: #084A7D;
+  --dangerBtn: #CC0E0E;
+  --inputBorder: #084A7D;
+  --inputBg: #F1F8FD;
+  --primaryBtn: #B0E3FF;
+  --primaryBtnBorder: #084A7D;
+  --pageBg: #F3F1F5;
+
+  --alertBg: #fff;
+  --alertSuccess: #2bdc72;
+  --alertSuccessText: #006328;
+  --alertInfo: #2b8fdc;
+  --alertError: #dc2b2b;
+}

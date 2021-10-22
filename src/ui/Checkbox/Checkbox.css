@@ -1,0 +1,41 @@
+.checkboxWrapper {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.checkboxLabel {
+  color: var(--mainText);
+  font-size: 17px;
+  margin-right: 5px;
+}
+
+.checkboxInput {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+.checkboxMaskContainer {
+  border-radius: 4px;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--controlBtnBorder);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkIcon {
+  color: var(--whiteText);
+  width: 15px;
+  height: 15px;
+  display: none;
+}
+
+.checkboxInput:checked + .checkboxMaskContainer {
+  background: var(--controlBtnBorder);
+  .checkIcon {
+    display: block;
+  }
+}

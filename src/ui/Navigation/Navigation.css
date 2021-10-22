@@ -1,0 +1,39 @@
+.navItem {
+  color: var(--mainText);
+  font-size: 24px;
+  text-decoration: none;
+  margin-right: 20px;
+  display: flex;
+}
+
+.navIcon {
+  color: var(--mainText);
+  margin-right: 5px;
+}
+
+.navItemName {
+  border-bottom: 3px solid transparent;
+}
+
+.activeLink {
+  .navItemName {
+    border-color: var(--navUnderline);
+  }
+}
+
+.navigation {
+  position: sticky;
+  width: 100%;
+  height: 90px;
+  padding: 30px;
+  background: var(--navBg);
+  border-bottom: 2px solid var(--mainText);
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.navItems {
+  flex: 1;
+  display: flex;
+}

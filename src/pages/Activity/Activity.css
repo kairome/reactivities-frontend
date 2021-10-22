@@ -1,0 +1,113 @@
+@import "../Activities/Activities.css";
+
+.activityPage {
+  color: var(--mainText);
+}
+
+.activityPageTitle {
+  margin: 0;
+  font-size: 40px;
+}
+
+.category {
+  composes: activityCategory;
+  width: fit-content;
+}
+
+.activityControlButtons {
+  composes: controlBtns;
+  margin-top: 20px;
+}
+
+.controlButton {
+  margin-right: 5px;
+}
+
+.activityViewDate {
+  display: inline-block;
+  color: var(--dateText);
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+.activityViewDescription {
+  color: var(--secondaryText);
+  margin-bottom: 40px;
+}
+
+.activityPageTop {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+
+.activityPageLeft {
+  flex: 2;
+  width: 100%;
+}
+
+.activityPageHeader {
+  background: var(--activityCard);
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, .3);
+  max-width: 500px;
+  border-radius: 12px;
+  margin-bottom: 40px;
+}
+
+.activityPageSidebar {
+  flex: 1;
+  width: 100%;
+  max-width: 500px;
+}
+
+.activityPageSubTitle {
+  font-size: 30px;
+  color: var(--mainText);
+  opacity: .7;
+  margin-bottom: 30px;
+}
+
+.activityPageInfo {
+  margin-bottom: 30px;
+}
+
+.activityPageFields {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  margin-bottom: 30px;
+}
+
+.activityPageField {
+  margin-right: 40px;
+}
+
+.activityPageFieldTitle {
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: var(--mainText);
+  opacity: .7;
+}
+
+.activityPageFieldValue {
+  display: flex;
+  font-size: 20px;
+  align-items: center;
+  color: var(--mainText);
+}
+
+.activityPageFieldIcon {
+  font-size: 17px;
+  margin-right: 5px;
+  color: var(--mainText);
+  opacity: .6;
+}
+
+.activityPageDesc {
+  color: var(--secondaryText);
+  margin-top: 0;
+  font-size: 20px;
+}

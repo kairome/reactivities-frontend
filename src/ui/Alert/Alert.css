@@ -1,0 +1,57 @@
+.alertContainer {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 20;
+}
+
+.alertItem {
+  position: relative;
+  right: -100%;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, .3);
+  min-height: 50px;
+  min-width: 250px;
+  border-radius: 4px;
+  padding: 15px;
+  box-sizing: border-box;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: right .5s ease-in;
+  border-right: 10px solid transparent;
+  background: var(--alertBg);
+
+  &.show {
+    right: 0;
+  }
+}
+
+.alertText {
+  font-size: 20px;
+  text-align: center;
+  color: var(--mainText);
+  white-space: pre-wrap;
+}
+
+.success {
+  border-color: var(--alertSuccess);
+
+  & .alertText {
+    color: var(--alertSuccessText);
+  }
+}
+
+.info {
+  border-color: var(--alertInfo);
+
+  & .alertText {
+    color: var(--alertInfo);
+  }
+}
+
+.error {
+  border-color: var(--alertError);
+
+  & .alertText {
+    color: var(--dangerBtn);
+  }
+}

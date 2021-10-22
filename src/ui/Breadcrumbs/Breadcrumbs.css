@@ -1,0 +1,23 @@
+.breadcrumbs {
+  display: flex;
+}
+
+.breadcrumb {
+  display: inline-block;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--mainText);
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &.inactive {
+    cursor: initial;
+  }
+}
+
+.separator {
+  display: inline-block;
+  margin: 0 10px;
+}

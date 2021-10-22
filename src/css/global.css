@@ -1,0 +1,12 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--pageBg);
+  overflow-y: hidden;
+}
+
+:global(#root) {
+  height: 100%;
+}

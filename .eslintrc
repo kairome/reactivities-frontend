@@ -1,0 +1,114 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "tsconfig.json"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "react"
+  ],
+  "ignorePatterns": [
+    "webpack.config.js",
+    "babel.config.js",
+    "postcss.config.js"
+  ],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "extends": [
+    "airbnb-typescript/base"
+  ],
+  "rules": {
+    "semi": 2,
+    "quote-props": [
+      "error",
+      "consistent-as-needed"
+    ],
+    "lines-between-class-members": [
+      "error",
+      "always",
+      {
+        "exceptAfterSingleLine": true
+      }
+    ],
+    "max-len": [
+      2,
+      120
+    ],
+    "import/no-cycle": 0,
+    "arrow-parens": 0,
+    "arrow-body-style": 0,
+    "func-names": [
+      "error",
+      "always",
+      {
+        "generators": "never"
+      }
+    ],
+    "@typescript-eslint/no-shadow": 0,
+    "react/no-danger": 0,
+    "import/no-extraneous-dependencies": 0,
+    "import/prefer-default-export": 0,
+    "import/no-webpack-loader-syntax": 0,
+    "import/order": 0,
+    "import/no-named-as-default": 0,
+    "no-unneeded-ternary": 0,
+    "no-underscore-dangle": 0,
+    "no-param-reassign": 0,
+    "no-confusing-arrow": 0,
+    "function-paren-newline": 0,
+    "camelcase": 0,
+    "react/jsx-curly-spacing": [
+      "error",
+      {
+        "when": "never",
+        "allowMultiline": false,
+        "children": true
+      }
+    ],
+    "react/destructuring-assignment": 0,
+    "react/prop-types": 0,
+    "react/jsx-fragments": 0,
+    "react/no-did-update-set-state": 0,
+    "react/no-will-update-set-state": 0,
+    "react/jsx-one-expression-per-line": 0,
+    "react/jsx-props-no-spreading": 0,
+    "react/state-in-constructor": 0,
+    "react/static-property-placement": 0,
+    "class-methods-use-this": 0,
+    "@typescript-eslint/no-use-before-define": 0,
+    "@typescript-eslint/no-implied-eval": 0,
+    "@typescript-eslint/no-throw-literal": 0,
+    "no-restricted-globals": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "jsx-a11y/label-has-associated-control": 0,
+    "jsx-a11y/anchor-is-valid": 0,
+    "jsx-a11y/label-has-for": 0,
+    "jsx-a11y/control-has-associated-label": 0,
+    "jsx-a11y/mouse-events-have-key-events": 0,
+    "jsx-a11y/media-has-caption": 0,
+    "jsx-a11y/no-autofocus": 0,
+    "jsx-a11y/no-noninteractive-element-interactions": 0,
+    "no-case-declarations": 0,
+    "import/extensions": 0,
+    "no-console": [
+      "error",
+      {
+        "allow": [
+          "error",
+          "warning",
+          "info"
+        ]
+      }
+    ],
+    "implicit-arrow-linebreak": 0
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": true
+    }
+  }
+}

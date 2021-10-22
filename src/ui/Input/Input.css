@@ -1,0 +1,45 @@
+.inputWrapper {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.input {
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  height: 50px;
+  width: 100%;
+  border: 1px solid transparent;
+  background: var(--inputBg);
+  font-size: 20px;
+  color: var(--secondaryText);
+
+  &:focus {
+    border-color: var(--inputBorder);
+  }
+}
+
+.textArea {
+  composes: input;
+  min-height: 100px;
+}
+
+.inputLabel {
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: var(--mainText);
+}
+
+.required {
+  color: var(--dangerBtn);
+}
+
+.errors {
+  margin: 10px 0;
+}
+
+.error {
+  margin-bottom: 10px;
+  color: var(--dangerBtn);
+}

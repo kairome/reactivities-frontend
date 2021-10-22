@@ -1,0 +1,6 @@
+@import "../Input/Input.css";
+
+.dateInputWrapper {
+  width: 100%;
+  margin-bottom: 20px;
+}

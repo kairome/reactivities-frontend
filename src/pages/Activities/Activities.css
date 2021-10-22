@@ -1,0 +1,203 @@
+.activityCard {
+  padding: 20px;
+  box-sizing: border-box;
+  background: var(--activityCard);
+  margin-bottom: 40px;
+  border-radius: 4px;
+  box-shadow: 1px 3px 7px rgba(0, 0, 0, .3);
+  max-width: 500px;
+  width: 100%;
+}
+
+.activityCards {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 2;
+}
+
+.activitiesPage {
+  height: 100%;
+  position: relative;
+}
+
+.activitiesContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.activitySideView {
+  border: 2px solid var(--formBorder);
+  padding: 30px 60px;
+  box-sizing: border-box;
+  border-radius: 12px;
+  max-width: 700px;
+  width: 100%;
+  box-shadow: 1px 1px 20px rgba(0, 0, 0, .25);
+}
+
+.activityForm {
+  padding: 20px 40px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.activityView {
+  color: var(--mainText);
+  font-size: 20px;
+  composes: activitySideView;
+}
+
+.controlBtns {
+  margin-left: auto;
+  display: flex;
+}
+
+.controlBtn {
+  margin-left: 5px;
+}
+
+.controlBtnIcon {
+  color: var(--mainText);
+}
+
+.activityHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+
+  h3 {
+    color: var(--mainText);
+    font-size: 30px;
+    margin: 0;
+  }
+}
+
+.activityLocation {
+  color: var(--secondaryText);
+  font-size: 20px;
+}
+
+.activitiesFooter {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.activityDate {
+  font-size: 15px;
+  color: var(--dateText);
+}
+
+.activityCategory {
+  border-radius: 30px;
+  color: var(--whiteText);
+  background: var(--categoryBg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 8px 23px;
+}
+
+.activityViewTitle {
+  margin: 0 0 20px;
+  text-align: center;
+  font-size: 40px;
+}
+
+.activityViewFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
+}
+
+.groupedActivities {
+  width: 100%;
+}
+
+.selectWrapper {
+  margin-bottom: 20px;
+}
+
+.filters {
+  padding: 10px;
+  box-sizing: border-box;
+  flex: 1;
+}
+
+.filterLabel {
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: var(--mainText);
+}
+
+.clearBtn {
+  margin-top: 20px;
+}
+
+.clearDate {
+  font-size: 17px;
+  color: var(--dangerBtn);
+  cursor: pointer;
+  margin-bottom: 10px;
+  border-bottom: 1px solid transparent;
+  width: fit-content;
+
+  &:hover {
+    border-color: var(--dangerBtn);
+  }
+}
+
+.sortGroupContainer {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 20px;
+}
+
+.sortLabel {
+  font-size: 17px;
+  color: var(--mainText);
+  margin-right: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.sortIcon {
+  color: var(--controlBtnBorder);
+  margin-left: 5px;
+}
+
+.groupedItem {
+  width: 100%;
+  margin-bottom: 50px;
+
+  & .activityCard {
+    margin-bottom: 0;
+  }
+}
+
+.groupDate {
+  font-size: 30px;
+  color: var(--dateText);
+  margin-bottom: 5px;
+}
+
+.groupSeparator {
+  margin-bottom: 40px;
+  width: 100%;
+  max-width: 500px;
+  height: 1px;
+  background: var(--controlBtnBorder);
+}
+
+.filtersTitle {
+  font-size: 25px;
+  color: var(--mainText);
+  margin-bottom: 10px;
+}

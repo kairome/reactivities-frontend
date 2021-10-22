@@ -1,0 +1,40 @@
+.radioInput {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+.radioItems {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.radioItem {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.radioMask {
+  width: 12px;
+  height: 12px;
+  border-radius: 100%;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.radioInput:checked + .radioMask {
+  background: var(--controlBtnBorder);
+}
+
+.radioMaskContainer {
+  width: 22px;
+  height: 22px;
+  position: relative;
+  border-radius: 100%;
+  background: var(--controlBtnBg);
+  margin-right: 5px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, .3);
+}
