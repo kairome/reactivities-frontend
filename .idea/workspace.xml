@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7e56c669-a466-4f99-ac29-cb333c159c11" name="Default Changelist" comment="" />
+    <list default="true" id="7e56c669-a466-4f99-ac29-cb333c159c11" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/colors.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/colors.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Auth/Auth.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Auth/Auth.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Auth/Auth.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Auth/Auth.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Auth/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Auth/LoginForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/Button/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/Button/Button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/Navigation/toolbar/Toolbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/Navigation/toolbar/Toolbar.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/reactivities" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -76,7 +84,8 @@
       <workItem from="1634200443727" duration="8467000" />
       <workItem from="1634291681524" duration="3104000" />
       <workItem from="1634451645642" duration="5233000" />
-      <workItem from="1634893214905" duration="8110000" />
+      <workItem from="1634893214905" duration="8322000" />
+      <workItem from="1634979759798" duration="3306000" />
     </task>
     <servers />
   </component>

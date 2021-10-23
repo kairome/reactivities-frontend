@@ -7,7 +7,7 @@
   --toolbarBtnBorder: #CC810E;
   --controlBtnBorder: #7338AC;
   --controlBtnBg: #F0D9FF;
-  --activityCard: #F3F1F5;
+  --activityCard: #FEFEFE;
   --whiteText: #FEFEFE;
   --categoryBg: #7338AC;
   --loaderColor: #7338AC;
@@ -25,4 +25,7 @@
   --alertSuccessText: #006328;
   --alertInfo: #2b8fdc;
   --alertError: #dc2b2b;
+
+  --patternMain: #7338AC;
+  --patternLighter: #e1c3ff;
 }

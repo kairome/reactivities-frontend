@@ -73,7 +73,12 @@ const LoginForm: React.FC = () => {
         errors={formErrors.Password}
         required
       />
-      <Button theme="action" text="Login" type="submit" />
+      <Button
+        theme="action"
+        text="Login"
+        type="submit"
+        isLoading={loginMutation.isLoading}
+      />
     </form>
   );
 };

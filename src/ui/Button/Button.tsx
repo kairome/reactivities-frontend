@@ -20,7 +20,7 @@ interface Props {
 }
 
 const Button: React.FC<Props> = (props) => {
-  const { text, className, icon, iconClassName, theme, isLoading, ...rest } = props;
+  const { text, className, icon, iconClassName, theme, isLoading, disabled, ...rest } = props;
 
   const btnText = icon ? (
     <FontAwesomeIcon
@@ -38,7 +38,7 @@ const Button: React.FC<Props> = (props) => {
   });
 
   return (
-    <button {...rest} className={btnClasses}>
+    <button {...rest} disabled={disabled || isLoading} className={btnClasses}>
       {btnText}
       {isLoading ? (<Loader size="sm" />) : null}
     </button>
