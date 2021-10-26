@@ -71,6 +71,11 @@
     color: var(--mainText);
     font-size: 30px;
     margin: 0;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 
@@ -169,7 +174,7 @@
 }
 
 .sortIcon {
-  color: var(--controlBtnBorder);
+  color: var(--grape);
   margin-left: 5px;
 }
 
@@ -193,11 +198,75 @@
   width: 100%;
   max-width: 500px;
   height: 1px;
-  background: var(--controlBtnBorder);
+  background: var(--grape);
 }
 
 .filtersTitle {
   font-size: 25px;
   color: var(--mainText);
   margin-bottom: 10px;
+}
+
+.filterCheckbox {
+  margin-right: 20px;
+}
+
+.attendanceContainer {
+  margin: 20px 0;
+  display: flex;
+  align-items: baseline;
+}
+
+.hostInfo {
+  font-size: 20px;
+  color: var(--mustardBrown);
+  margin-right: 25px;
+}
+
+.attendingInfo {
+  composes: hostInfo;
+  color: var(--funGreen);
+}
+
+.hostIcon, .attendeeIcon, .attendingIcon {
+  font-size: 23px;
+  margin-right: 5px;
+}
+
+.attendeeInfo {
+  font-size: 20px;
+  color: var(--darkCerulean);
+}
+
+.attendeeItem {
+  color: var(--mainText);
+  font-size: 20px;
+  width: 100%;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: baseline;
+
+  div {
+    white-space: nowrap;
+  }
+}
+
+.attendeeItemIcon {
+  font-size: 20px;
+  color: var(--mainText);
+  margin-right: 5px;
+}
+
+.cancelledActivityCard {
+  margin-bottom: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: center;
+  border-radius: 12px;
+  background: var(--dangerBtn);
+}
+
+.cancelledActivityCardText {
+  color: var(--whiteText);
+  font-size: 20px;
 }

@@ -74,6 +74,7 @@ const RegisterForm: React.FC<Props> = (props) => {
         value={registerData.Password}
         onChange={handleFormChange('Password')}
         errors={formErrors.Password}
+        required
       />
       <Input
         type="text"

@@ -6,6 +6,8 @@ const path = require('path');
 
 const port = 3000;
 
+const devMode = process.env.NODE_ENV !== 'production';
+
 const clientConfig = {
   entry: ['./src/index.tsx'],
   output: {
@@ -103,7 +105,8 @@ const clientConfig = {
   plugins: [
     new MiniCssExtractPlugin({
       ignoreOrder: true,
-      filename: 'css/[name].[contenthash].css',
+      filename: devMode ? "css/[name].css" : "css/[name].[contenthash].css",
+      chunkFilename: devMode ? "css/[id].css" : "css/[id].[contenthash].css",
     }),
     new CopyWebpackPlugin({
       patterns: [

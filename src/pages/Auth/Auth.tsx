@@ -46,11 +46,11 @@ const Auth: React.FC = () => {
           <defs>
             <linearGradient id="a" gradientUnits="userSpaceOnUse" x1="0" x2="0" y1="0" y2="100%"
                             gradientTransform="rotate(240)">
-              <stop offset="0" stop-color="#ffffff" />
-              <stop offset="1" stop-color="#ae44ffee" />
+              <stop offset="0" stopColor="#ffffff" />
+              <stop offset="1" stopColor="#ae44ffee" />
             </linearGradient>
             <pattern patternUnits="userSpaceOnUse" id="b" width="540" height="450" x="0" y="0" viewBox="0 0 1080 900">
-              <g fill-opacity="0.1">
+              <g fillOpacity="0.1">
                 <polygon fill="#444" points="90 150 0 300 180 300" />
                 <polygon points="90 150 180 0 0 0" />
                 <polygon fill="#AAA" points="270 150 360 0 180 0" />

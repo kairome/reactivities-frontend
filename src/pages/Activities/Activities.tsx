@@ -5,31 +5,29 @@ import { ActivityFiltersPayload, ActivityItem } from 'types/activity';
 import _ from 'lodash';
 
 import s from './Activities.css';
-import Button from 'ui/Button/Button';
 import AddEditActivityModal from 'pages/Activities/AddEditActivityModal';
-import { faPenNib, faTrash, faEye, faSortAmountUpAlt, faSortAmountDown } from '@fortawesome/free-solid-svg-icons';
+import { faSortAmountUpAlt, faSortAmountDown } from '@fortawesome/free-solid-svg-icons';
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import activitiesFormState from 'recoil/activitiesFormState';
 import Loader from 'ui/Loader/Loader';
 import { useModal } from 'recoil/modalsState';
-import { Tooltip } from 'react-tippy';
 
-import ActivityFilters from 'pages/Activities/ActivityFilters';
-// import { useHistory } from 'react-router-dom';
+import ActivityFilters from 'pages/Activities/ActivityFilters';;
 import Checkbox from 'ui/Checkbox/Checkbox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAlert } from 'recoil/alertState';
 
-import history from 'utils/history';
+import { currentUserState } from 'recoil/user';
+import ActivityCard from 'pages/Activities/ActivityCard';
 
 dayjs.extend(relativeTime);
 
 const Activities: React.FC = () => {
   const queryClient = useQueryClient();
-  // const history = useHistory();
+  const currentUser = useRecoilValue(currentUserState);
   const { spawnAlert } = useAlert();
 
   const [filters, setFilters] = useState<ActivityFiltersPayload>({
@@ -43,7 +41,7 @@ const Activities: React.FC = () => {
 
   const [modalActivity, setModalActivity] = useState<ActivityItem | null>(null);
   const [formType, setFormType] = useRecoilState(activitiesFormState);
-  const { isModalOpen, showModal } = useModal('addEditActivity');
+  const { showModal } = useModal('addEditActivity');
 
   const deleteMutation = useMutation(deleteActivity.name, deleteActivity.request, {
     onSuccess: (data: undefined, activityId) => {
@@ -85,50 +83,13 @@ const Activities: React.FC = () => {
   };
 
   const renderActivityCard = (activity: ActivityItem) => {
-    const category = activity.Category ? (<div className={s.activityCategory}>{activity.Category}</div>) : null;
-
-    const date = dayjs(activity.Date);
-
     return (
-      <div key={activity.Id} className={s.activityCard}>
-        <div className={s.activityHeader}>
-          <h3>{activity.Title}</h3>
-          <div className={s.controlBtns}>
-            <Button
-              theme="action"
-              icon={faEye}
-              className={s.controlBtn}
-              onClick={() => history.push(`/activity/${activity.Id}`)}
-              disabled={isModalOpen}
-            />
-            <Button
-              theme="action"
-              icon={faPenNib}
-              className={s.controlBtn}
-              onClick={() => handleEditActivity(activity)}
-            />
-            <Button
-              theme="action"
-              icon={faTrash}
-              className={s.controlBtn}
-              onClick={() => handleDeleteActivity(activity)}
-            />
-          </div>
-        </div>
-        <div className={s.activityLocation}>
-          {activity.City}, {activity.Venue}
-        </div>
-        <div className={s.activitiesFooter}>
-          <Tooltip
-            title={date.format('DD MMMM YYYY, HH:mm')}
-            position="top"
-            trigger="mouseenter"
-          >
-            <div className={s.activityDate}>{date.fromNow()}</div>
-          </Tooltip>
-          {category}
-        </div>
-      </div>
+      <ActivityCard
+        activity={activity}
+        currentUserId={currentUser.Id}
+        onEdit={handleEditActivity}
+        onDelete={handleDeleteActivity}
+      />
     );
   };
 
@@ -181,7 +142,13 @@ const Activities: React.FC = () => {
         <Checkbox
           label="Group by date"
           isChecked={groupByDate}
+          className={s.filterCheckbox}
           onChange={() => setGroupByDate(!groupByDate)}
+        />
+        <Checkbox
+          label="My activities"
+          isChecked={Boolean(filters.IsMy)}
+          onChange={() => setFilters({ ...filters, IsMy: !filters.IsMy })}
         />
       </div>
     );

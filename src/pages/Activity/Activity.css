@@ -2,6 +2,12 @@
 
 .activityPage {
   color: var(--mainText);
+  margin: auto;
+  max-width: 75vw;
+}
+
+.content {
+  width: 100%;
 }
 
 .activityPageTitle {
@@ -43,7 +49,9 @@
 
 .activityPageLeft {
   flex: 2;
+  flex-shrink: 0;
   width: 100%;
+  margin-right: 60px;
 }
 
 .activityPageHeader {
@@ -58,8 +66,8 @@
 
 .activityPageSidebar {
   flex: 1;
+  flex-shrink: 0;
   width: 100%;
-  max-width: 500px;
 }
 
 .activityPageSubTitle {
@@ -110,4 +118,35 @@
   color: var(--secondaryText);
   margin-top: 0;
   font-size: 20px;
+}
+
+.attendeesTitle {
+  font-size: 40px;
+  margin: 0 0 20px;
+}
+
+.attendee {
+  font-size: 25px;
+  margin-bottom: 15px;
+  color: var(--mainText);
+  white-space: nowrap;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all .2s ease-in;
+  width: fit-content;
+
+  &:hover {
+    border-color: var(--mustardBrown);
+  }
+}
+
+.userIcon {
+  margin-right: 5px;
+}
+
+.cancelledActivity {
+  font-size: 23px;
+  color: var(--dangerBtn);
+  font-weight: bold;
+  float: right;
 }

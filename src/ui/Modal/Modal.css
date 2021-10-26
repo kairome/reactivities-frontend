@@ -17,7 +17,7 @@
 
 .modalBody {
   position: relative;
-  background: var(--pageBg);
+  background: var(--whiteText);
   padding: 20px;
   box-sizing: border-box;
   border-radius: 12px;

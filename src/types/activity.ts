@@ -1,3 +1,8 @@
+export interface ActivityAttendee {
+  Name: string,
+  UserId: string,
+}
+
 export interface ActivityItem {
   Category: string,
   City: string,
@@ -7,6 +12,10 @@ export interface ActivityItem {
   Id: string,
   Title: string,
   Venue: string,
+  AuthorName: string,
+  AuthorId: string,
+  Attendees: ActivityAttendee[],
+  IsCancelled: boolean,
 }
 
 export interface CreateActivityPayload {
@@ -26,4 +35,5 @@ export interface ActivityFiltersPayload {
   DateTo?: string,
   Categories?: string[],
   Cities?: string[],
+  IsMy?: boolean,
 }
