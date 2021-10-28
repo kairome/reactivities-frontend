@@ -8,6 +8,7 @@ import '!style-loader!css-loader!react-tippy/dist/tippy.css';
 import '!style-loader!css-loader!react-calendar/dist/Calendar.css';
 import '!style-loader!css-loader!react-datetime-picker/dist/DateTimePicker.css';
 import '!style-loader!css-loader!react-clock/dist/Clock.css';
+import '!style-loader!css-loader!cropperjs/dist/cropper.css';
 
 import { RecoilRoot } from 'recoil';
 
@@ -24,6 +25,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: false,
+      refetchOnWindowFocus: false,
     },
   },
 });

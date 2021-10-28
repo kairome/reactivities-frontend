@@ -142,9 +142,8 @@ const AddEditActivityModal: React.FC<Props> = (props) => {
   };
 
   return (
-    <Modal modalKey={modalKey}>
+    <Modal modalKey={modalKey} title={activity ? 'Edit activity' : 'Add activity'}>
       <form onSubmit={handleSubmit} className={s.activityForm}>
-        <h3 className={s.activityViewTitle}>{activity ? 'Edit' : 'Add'} activity</h3>
         <Input
           type="text"
           label="Title"

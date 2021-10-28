@@ -24,8 +24,14 @@ const App: React.FC = () => {
 
   const renderAppRoutes = () => {
     if (isLoading) {
-      return (<Loader />);
+      return (
+        <div className={s.pageLoader}>
+          <Loader size="xxl" />
+        </div>
+      );
     }
+
+
     return (
       <React.Fragment>
         <Navigation />

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Input from 'ui/Input/Input';
 import { useMutation } from 'react-query';
 import { register } from 'api/account';
-import history from 'utils/history';
 import handleApiErrors from 'api/handleApiErrors';
 import { ValidationErrors } from 'types/entities';
 import { useAlert } from 'recoil/alertState';

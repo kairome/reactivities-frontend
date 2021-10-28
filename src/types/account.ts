@@ -11,8 +11,3 @@ export interface RegisterPayload {
   Password: string,
 }
 
-export interface CurrentUser {
-  DisplayName: string,
-  Id: string,
-  Email: string | null,
-}

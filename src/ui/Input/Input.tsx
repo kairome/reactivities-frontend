@@ -2,6 +2,8 @@ import React from 'react';
 
 import s from './Input.css';
 import _ from 'lodash';
+import classNames from 'classnames';
+import { InputEvent, InputEventElement } from 'types/entities';
 
 interface CommonInputProps {
   type: string,
@@ -10,6 +12,11 @@ interface CommonInputProps {
   placeholder?: string,
   required?: boolean,
   errors?: string[],
+  className?: string,
+  onBlur?: (e: InputEvent) => void,
+  onKeyDown?: (e: React.KeyboardEvent<InputEventElement>) => void,
+  disabled?: boolean,
+  autoFocus?: boolean,
 }
 
 interface InputProps extends CommonInputProps {
@@ -23,7 +30,7 @@ interface TextareaProps extends CommonInputProps {
 }
 
 const Input: React.FC<InputProps | TextareaProps> = (props) => {
-  const { label, textArea, errors, ...rest } = props;
+  const { label, textArea, errors, className, ...rest } = props;
 
   const renderErrors = () => {
     if (_.isEmpty(errors)) {
@@ -49,7 +56,7 @@ const Input: React.FC<InputProps | TextareaProps> = (props) => {
     );
   };
   return (
-    <div className={s.inputWrapper}>
+    <div className={classNames(s.inputWrapper, className)}>
       <label>
         <div className={s.inputLabel}>
           {label}{props.required ? (<span className={s.required}> *</span>) : null}

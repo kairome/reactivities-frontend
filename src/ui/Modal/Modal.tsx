@@ -4,6 +4,7 @@ import { useModal } from 'recoil/modalsState';
 import s from './Modal.css';
 
 interface Props {
+  title: string,
   modalKey: string,
   children: React.ReactNode,
 }
@@ -19,6 +20,7 @@ const Modal: React.FC<Props> = (props) => {
     <div className={s.modal}>
       <div className={s.modalCover} onClick={closeModal} />
       <div className={s.modalBody}>
+        <div className={s.modalTitle}>{props.title}</div>
         {props.children}
       </div>
     </div>

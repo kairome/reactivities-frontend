@@ -1,4 +1,5 @@
 import { MultiValue, SingleValue } from 'react-select';
+import React from 'react';
 
 export interface SelectOption {
   value: string,
@@ -20,3 +21,12 @@ export type SpawnAlert = (a: Omit<AlertItem, 'id'>) => void;
 export type ValidationErrors = {
   [k: string]: string[],
 };
+
+export type InputEventElement = HTMLInputElement | HTMLTextAreaElement;
+
+export type InputEvent = React.FormEvent<InputEventElement>;
+
+export interface TabItem {
+  id: string,
+  title: string,
+}

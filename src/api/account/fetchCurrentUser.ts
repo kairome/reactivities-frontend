@@ -1,8 +1,7 @@
 import api from 'api/apiRequests';
-import { LoginPayload } from 'types/account';
 
 const fetchCurrentUser = async () => {
-  return api.get('/users/current');
+  return api.get('/current-user');
 };
 
 export default {

@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Activities from 'pages/Activities/Activities';
 import _ from 'lodash';
 import Activity from 'pages/Activity/Activity';
+import Profile from 'pages/Profile/Profile';
 
 
 const routes = [
@@ -11,6 +12,12 @@ const routes = [
     component: Activity,
     path: '/activity/:id',
     exact: false,
+  },
+  {
+    title: 'Profile',
+    component: Profile,
+    path: '/profile',
+    exact: true,
   },
   {
     title: 'Activities',
