@@ -1,40 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7e56c669-a466-4f99-ac29-cb333c159c11" name="Default Changelist" comment="Add user profile page and photos">
-      <change afterPath="$PROJECT_DIR$/src/api/useQueryUpdate.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/api/user/deleteUserPhoto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/api/user/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/api/user/setUserProfilePhoto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/api/user/updateUserProfile.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/api/user/uploadProfilePhoto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/Profile/Profile.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/Profile/Profile.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/Profile/ProfileContent.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/Profile/photos/Photos.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/Profile/photos/UploadPhotoModal.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/Profile/photos/UserPhotoAlbum.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/user.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Tabs/Tabs.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Tabs/Tabs.tsx" afterDir="false" />
+    <list default="true" id="7e56c669-a466-4f99-ac29-cb333c159c11" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/default.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/user/fetchUserProfile.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ui/ConfirmationModal/ConfirmationModal.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ui/ConfirmationModal/ConfirmationModal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ui/UserProfileCard/UserProfileCard.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ui/UserProfileCard/UserProfileCard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ui/UserProfileCard/UserProfileModal.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/account/fetchCurrentUser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/account/fetchCurrentUser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Activities/AddEditActivityModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Activities/AddEditActivityModal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Auth/RegisterForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Auth/RegisterForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/recoil/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/recoil/user.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/account.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/account.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/entities.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/entities.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/Input/Input.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/Input/Input.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/Loader/Loader.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/Loader/Loader.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/Loader/Loader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/Loader/Loader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/user/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/user/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Activities/Activities.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Activities/Activities.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Activities/Activities.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Activities/Activities.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Activities/ActivityCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Activities/ActivityCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Activities/AttendeesDropdown.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Activities/AttendeesDropdown.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Activity/Activity.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Activity/Activity.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Profile/Profile.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Profile/Profile.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Profile/Profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Profile/Profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Profile/photos/UploadPhotoModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Profile/photos/UploadPhotoModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Profile/photos/UserPhotoAlbum.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Profile/photos/UserPhotoAlbum.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/recoil/modalsState.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/recoil/modalsState.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/activity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/activity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/user.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/Dropdown/Dropdown.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/Dropdown/Dropdown.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ui/Modal/Modal.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/Modal/Modal.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ui/Modal/Modal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/Modal/Modal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +55,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/types/user.ts" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -80,6 +71,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public" />
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -119,7 +111,8 @@
       <workItem from="1634979759798" duration="7434000" />
       <workItem from="1635051975442" duration="7935000" />
       <workItem from="1635147165895" duration="8283000" />
-      <workItem from="1635417727362" duration="19491000" />
+      <workItem from="1635417727362" duration="19534000" />
+      <workItem from="1635497840714" duration="12551000" />
     </task>
     <task id="LOCAL-00001" summary="Add cancel/activate activity + attend/leave activity">
       <created>1635273027411</created>
@@ -128,13 +121,22 @@
       <option name="project" value="LOCAL" />
       <updated>1635273027411</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Add user profile page and photos">
+      <created>1635448278823</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1635448278823</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <ignored-roots>
       <path value="$PROJECT_DIR$/reactivities" />
     </ignored-roots>

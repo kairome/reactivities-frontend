@@ -4,7 +4,7 @@ import _ from 'lodash';
 import s from 'pages/Activities/Activities.css';
 import dayjs from 'dayjs';
 import Button from 'ui/Button/Button';
-import { faEye, faPenNib, faTrash, faHouseUser, faBriefcase, faBan } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faPenNib, faHouseUser, faBriefcase, faBan, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import history from 'utils/history';
 import { Tooltip } from 'react-tippy';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,11 +14,12 @@ interface Props {
   activity: ActivityItem,
   currentUserId: string,
   onEdit: (a: ActivityItem) => void,
-  onDelete: (a: ActivityItem) => void,
+  onCancelActivate: (a: ActivityItem) => void,
+  isLoading: boolean,
 }
 
 const ActivityCard: React.FC<Props> = (props) => {
-  const { activity, currentUserId } = props;
+  const { activity, currentUserId, isLoading } = props;
 
   const date = dayjs(activity.Date);
   const isHost = currentUserId === activity.AuthorId;
@@ -66,23 +67,29 @@ const ActivityCard: React.FC<Props> = (props) => {
     );
   };
 
-  const editBtn = isHost ? (
-    <Button
-      theme="action"
-      icon={faPenNib}
-      className={s.controlBtn}
-      onClick={() => props.onEdit(activity)}
-    />
-  ) : null;
+  const renderControlBtns = () => {
+    if (!isHost) {
+      return null;
+    }
 
-  const deleteBtn = isHost ? (
-    <Button
-      theme="action"
-      icon={faTrash}
-      className={s.controlBtn}
-      onClick={() => props.onDelete(activity)}
-    />
-  ) : null;
+    return (
+      <React.Fragment>
+        <Button
+          theme="action"
+          icon={faPenNib}
+          className={s.controlBtn}
+          onClick={() => props.onEdit(activity)}
+        />
+        <Button
+          theme="action"
+          icon={activity.IsCancelled ? faCheckCircle : faBan}
+          className={s.controlBtn}
+          onClick={() => props.onCancelActivate(activity)}
+          disabled={isLoading}
+        />
+      </React.Fragment>
+    );
+  };
 
   const category = activity.Category ? (<div className={s.activityCategory}>{activity.Category}</div>) : null;
   return (
@@ -97,8 +104,7 @@ const ActivityCard: React.FC<Props> = (props) => {
             className={s.controlBtn}
             onClick={() => history.push(`/activity/${activity.Id}`)}
           />
-          {editBtn}
-          {deleteBtn}
+          {renderControlBtns()}
         </div>
       </div>
       <div className={s.activityLocation}>

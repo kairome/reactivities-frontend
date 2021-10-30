@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import s from './Dropdown.css';
 import _ from 'lodash';
@@ -11,7 +11,23 @@ interface Props {
 
 const Dropdown: React.FC<Props> = (props) => {
   const { list } = props;
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (containerRef.current !== null && containerRef.current.contains((e.target as Node))) {
+        return;
+      }
+
+      setShow(false);
+    };
+
+    window.addEventListener('mouseup', handleOutsideClick, true);
+
+    return () => window.removeEventListener('mouseup', handleOutsideClick, true);
+  }, []);
+
   const handleClick = () => {
     if (_.isEmpty(list)) {
       return;
@@ -33,7 +49,7 @@ const Dropdown: React.FC<Props> = (props) => {
   };
 
   return (
-    <div className={s.dropdownItem} onClick={handleClick}>
+    <div className={s.dropdownItem} onClick={handleClick} ref={containerRef}>
       {props.renderDropdownControl()}
       {renderDropdown()}
     </div>

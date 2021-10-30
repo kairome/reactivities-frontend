@@ -158,21 +158,13 @@ const Profile: React.FC = () => {
   };
 
   const renderProfilePhoto = () => {
-    if (!currentUser.ProfilePhoto) {
-      return (
-        <div>
-          No photo yet, upload now!
-        </div>
-      );
-    }
-
     return (
-      <div className={s.profilePhoto} onClick={showModal}>
+      <div className={s.profilePhoto} onClick={() => showModal()}>
         <div className={s.photoCover}>
           <FontAwesomeIcon icon={faFileUpload} className={s.uploadIcon} />
         </div>
         <img
-          src={currentUser.ProfilePhoto.Url}
+          src={currentUser.ProfilePhoto ? currentUser.ProfilePhoto.Url : '/assets/default.jpeg'}
           alt="profile photo"
         />
       </div>

@@ -36,4 +36,5 @@ export interface ActivityFiltersPayload {
   Categories?: string[],
   Cities?: string[],
   IsMy?: boolean,
+  Attending?: boolean,
 }

@@ -1,7 +1,9 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useModal } from 'recoil/modalsState';
 
 import s from './Modal.css';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 interface Props {
   title: string,
@@ -18,9 +20,12 @@ const Modal: React.FC<Props> = (props) => {
 
   return (
     <div className={s.modal}>
-      <div className={s.modalCover} onClick={closeModal} />
+      <div className={s.modalCover} onClick={() => closeModal()} />
       <div className={s.modalBody}>
-        <div className={s.modalTitle}>{props.title}</div>
+        <div className={s.modalHeader}>
+          <div className={s.modalTitle}>{props.title}</div>
+          <FontAwesomeIcon icon={faTimes} onClick={() => closeModal()} className={s.modalClose} />
+        </div>
         {props.children}
       </div>
     </div>

@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ActivityAttendee } from 'types/activity';
 import _ from 'lodash';
-import { faAddressCard, faUserAlt} from '@fortawesome/free-solid-svg-icons';
+import { faAddressCard, faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import s from './Activities.css';
 import Dropdown from 'ui/Dropdown/Dropdown';
+import UserProfileModal from 'ui/UserProfileCard/UserProfileModal';
+import { useModal } from 'recoil/modalsState';
+import { useRecoilValue } from 'recoil';
+import { currentUserState } from 'recoil/user';
+import history from 'utils/history';
 
 interface Props {
   attendees: ActivityAttendee[],
@@ -13,14 +18,31 @@ interface Props {
 
 const AttendeesDropdown: React.FC<Props> = (props) => {
   const { attendees } = props;
+  const currentUser = useRecoilValue(currentUserState);
+  const [currentUserId, setCurrentUserId] = useState('');
+  const { showModal } = useModal('');
+
+  const handleAttendeeClick = (id: string) => {
+    if (currentUser.Id === id) {
+      history.push('/profile');
+      return;
+    }
+
+    showModal(`userProfile-${id}`);
+    setCurrentUserId(id);
+  };
 
   const renderList = () => {
-    return _.map(attendees, attendee => (
-      <div key={attendee.UserId} className={s.attendeeItem}>
-        <FontAwesomeIcon className={s.attendeeItemIcon} icon={faUserAlt} />
-        <div>{attendee.Name}</div>
-      </div>
-    ));
+    return _.map(attendees, (attendee) => {
+      const youText = attendee.UserId === currentUser.Id ? ' (you)' : null;
+
+      return (
+        <div key={attendee.UserId} className={s.attendeeItem} onClick={() => handleAttendeeClick(attendee.UserId)}>
+          <FontAwesomeIcon className={s.attendeeItemIcon} icon={faUserAlt} />
+          <div className={s.attendeeName}>{attendee.Name}{youText}</div>
+        </div>
+      );
+    });
   };
 
 
@@ -34,10 +56,13 @@ const AttendeesDropdown: React.FC<Props> = (props) => {
   };
 
   return (
-    <Dropdown
-      renderDropdownControl={renderAttendance}
-      list={renderList()}
-    />
+    <React.Fragment>
+      <Dropdown
+        renderDropdownControl={renderAttendance}
+        list={renderList()}
+      />
+      <UserProfileModal userId={currentUserId} />
+    </React.Fragment>
   );
 };
 

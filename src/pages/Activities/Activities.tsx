@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { deleteActivity, fetchActivities } from 'api/activities';
+import { activateActivity, cancelActivity, fetchActivities } from 'api/activities';
 import { ActivityFiltersPayload, ActivityItem } from 'types/activity';
 import _ from 'lodash';
 
@@ -15,13 +15,15 @@ import activitiesFormState from 'recoil/activitiesFormState';
 import Loader from 'ui/Loader/Loader';
 import { useModal } from 'recoil/modalsState';
 
-import ActivityFilters from 'pages/Activities/ActivityFilters';;
+import ActivityFilters from 'pages/Activities/ActivityFilters';
 import Checkbox from 'ui/Checkbox/Checkbox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAlert } from 'recoil/alertState';
 
 import { currentUserState } from 'recoil/user';
 import ActivityCard from 'pages/Activities/ActivityCard';
+import handleApiSuccess from 'api/handleApiSuccess';
+import handleApiErrors from 'api/handleApiErrors';
 
 dayjs.extend(relativeTime);
 
@@ -43,14 +45,25 @@ const Activities: React.FC = () => {
   const [formType, setFormType] = useRecoilState(activitiesFormState);
   const { showModal } = useModal('addEditActivity');
 
-  const deleteMutation = useMutation(deleteActivity.name, deleteActivity.request, {
-    onSuccess: (data: undefined, activityId) => {
+  const activateMutation = useMutation(activateActivity.name, activateActivity.request, {
+    onSuccess: (data) => {
       queryClient.setQueryData<ActivityItem[]>(
-        [fetchActivities.name, filters], (oldData) => _.filter(oldData, d => d.Id !== activityId));
-      spawnAlert({
-        type: 'success',
-        title: 'Activity deleted!',
-      });
+        [fetchActivities.name, filters], (oldData) => _.map(oldData, d => d.Id === data.Id ? data : d));
+      handleApiSuccess('Activity activated!', spawnAlert);
+    },
+    onError: (error: any) => {
+      handleApiErrors(error.Message, 'Cannot activate the activity', spawnAlert);
+    },
+  });
+
+  const cancelMutation = useMutation(cancelActivity.name, cancelActivity.request, {
+    onSuccess: (data) => {
+      queryClient.setQueryData<ActivityItem[]>(
+        [fetchActivities.name, filters], (oldData) => _.map(oldData, d => d.Id === data.Id ? data : d));
+      handleApiSuccess('Activity canceled!', spawnAlert);
+    },
+    onError: (error: any) => {
+      handleApiErrors(error.Message, 'Cannot cancel the activity', spawnAlert);
     },
   });
 
@@ -71,9 +84,13 @@ const Activities: React.FC = () => {
     }
   }, [activities]);
 
-  const handleDeleteActivity = (activity: ActivityItem) => {
-    setModalActivity(activity);
-    deleteMutation.mutate(activity.Id);
+  const handleCancelActivate = (activity: ActivityItem) => {
+    if (activity.IsCancelled) {
+      activateMutation.mutate(activity.Id);
+      return;
+    }
+
+    cancelMutation.mutate(activity.Id);
   };
 
   const handleEditActivity = (activity: ActivityItem) => {
@@ -85,10 +102,12 @@ const Activities: React.FC = () => {
   const renderActivityCard = (activity: ActivityItem) => {
     return (
       <ActivityCard
+        key={activity.Id}
         activity={activity}
         currentUserId={currentUser.Id}
         onEdit={handleEditActivity}
-        onDelete={handleDeleteActivity}
+        isLoading={cancelMutation.isLoading || activateMutation.isLoading}
+        onCancelActivate={handleCancelActivate}
       />
     );
   };
@@ -148,7 +167,13 @@ const Activities: React.FC = () => {
         <Checkbox
           label="My activities"
           isChecked={Boolean(filters.IsMy)}
+          className={s.filterCheckbox}
           onChange={() => setFilters({ ...filters, IsMy: !filters.IsMy })}
+        />
+        <Checkbox
+          label="I'm attending"
+          isChecked={Boolean(filters.Attending)}
+          onChange={() => setFilters({ ...filters, Attending: !filters.Attending })}
         />
       </div>
     );

@@ -18,3 +18,10 @@ export interface CurrentUser {
   ProfilePhoto: UserPhoto | null,
   Photos: UserPhoto[],
 }
+
+export interface UserProfileItem {
+  Id: string,
+  Name: string,
+  PhotoUrl: string,
+  Bio: string,
+}

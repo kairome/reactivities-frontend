@@ -12,12 +12,14 @@ export const modalsState = atom<ModalsState>({
 export const useModal = (modalKey: string) => {
   const [state, setState] = useRecoilState(modalsState);
 
-  const showModal = () => {
-    setState({ ...state, [modalKey]: true });
+  const showModal = (key?: string) => {
+    const modalName = typeof key === 'string' ? key : modalKey;
+    setState({ ...state, [modalName]: true });
   };
 
-  const closeModal = () => {
-    setState({ ...state, [modalKey]: false });
+  const closeModal = (key?: string) => {
+    const modalName = typeof key === 'string' ? key : modalKey;
+    setState({ ...state, [modalName]: false });
   };
 
   const currentState = state[modalKey];

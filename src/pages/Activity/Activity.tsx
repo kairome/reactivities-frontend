@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
 import { ActivityItem } from 'types/activity';
@@ -29,6 +29,8 @@ import { currentUserState } from 'recoil/user';
 import _ from 'lodash';
 import handleApiErrors from 'api/handleApiErrors';
 import handleApiSuccess from 'api/handleApiSuccess';
+import UserProfileModal from 'ui/UserProfileCard/UserProfileModal';
+import ConfirmationModal from 'ui/ConfirmationModal/ConfirmationModal';
 
 const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
   const { id } = props.match.params;
@@ -37,6 +39,10 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
   const { spawnAlert } = useAlert();
 
   const { showModal } = useModal('addEditActivity');
+  const { showModal: showUserProfileModal } = useModal('');
+  const { showModal: showDeleteConfirmation } = useModal('deleteActivityConfirmation');
+
+  const [currentAttendeeId, setCurrentAttendeeId] = useState('');
 
   const {
     data: activity,
@@ -94,8 +100,21 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
     },
   });
 
+  const handleDeleteConfirmation = () => {
+    showDeleteConfirmation();
+  };
+
   const handleDeleteActivity = () => {
     deleteMutation.mutate(id);
+  };
+
+  const handleAttendeeClick = (id: string) => {
+    if (id === currentUser.Id) {
+      history.push('/profile');
+      return;
+    }
+    setCurrentAttendeeId(id);
+    showUserProfileModal(`userProfile-${id}`);
   };
 
   if (isLoading) {
@@ -146,6 +165,10 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
       );
     }
 
+    if (activity.IsCancelled) {
+      return null;
+    }
+
     return (
       <Button
         theme="primary"
@@ -164,7 +187,7 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
     const cancelActivateBtn = activity.IsCancelled ? (
       <Button
         theme="primary"
-        text="Activate"
+        text="Activate activity"
         className={s.controlButton}
         onClick={() => activateMutation.mutate(activity.Id)}
         disabled={deleteMutation.isLoading}
@@ -172,7 +195,7 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
     ) : (
       <Button
         theme="danger"
-        text="Cancel"
+        text="Cancel activity"
         className={s.controlButton}
         onClick={() => cancelMutation.mutate(activity.Id)}
         disabled={deleteMutation.isLoading}
@@ -193,7 +216,7 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
           theme="danger"
           text="Delete"
           className={s.controlButton}
-          onClick={handleDeleteActivity}
+          onClick={handleDeleteConfirmation}
           disabled={deleteMutation.isLoading}
         />
       </React.Fragment>
@@ -202,10 +225,11 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
 
   const renderAttendees = () => {
     const list = _.map(activity.Attendees, (attendee) => {
+      const youText = attendee.UserId === currentUser.Id ? ' (you)' : null;
       return (
-        <div key={attendee.UserId} className={s.attendee}>
+        <div key={attendee.UserId} className={s.attendee} onClick={() => handleAttendeeClick(attendee.UserId)}>
           <FontAwesomeIcon icon={faUserAlt} className={s.userIcon} />
-          <span>{attendee.Name}</span>
+          <span>{attendee.Name}{youText}</span>
         </div>
       );
     });
@@ -216,6 +240,7 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
         <div className={s.activityPageHeader}>
           {_.isEmpty(list) ? 'No one is going yet :(' : list}
         </div>
+        <UserProfileModal userId={currentAttendeeId} />
       </React.Fragment>
     );
   };
@@ -268,6 +293,13 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
         </div>
       </div>
       <AddEditActivityModal activity={activity} />
+      <ConfirmationModal
+        modalKey="deleteActivityConfirmation"
+        title="Delete activity"
+        text="Are you sure you want to delete the activity? This action is irreversible"
+        status={deleteMutation.status}
+        action={handleDeleteActivity}
+      />
     </div>
   );
 };

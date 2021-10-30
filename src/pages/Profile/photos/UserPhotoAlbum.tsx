@@ -15,12 +15,15 @@ import handleApiSuccess from 'api/handleApiSuccess';
 import { fetchCurrentUser } from 'api/account';
 import handleApiErrors from 'api/handleApiErrors';
 import Loader from 'ui/Loader/Loader';
+import ConfirmationModal from 'ui/ConfirmationModal/ConfirmationModal';
+import { useModal } from 'recoil/modalsState';
 
 const UserPhotoAlbum: React.FC = () => {
   const { spawnAlert } = useAlert();
   const queryClient = useQueryClient();
   const { Photos, ProfilePhoto } = useRecoilValue(currentUserState);
   const [currentPhoto, setCurrentPhoto] = useState<UserPhoto | null>(null);
+  const { showModal: showDeleteConfirmation } = useModal('deletePhotoConfirmation');
 
   const setMutation = useMutation(setUserProfilePhoto.name, setUserProfilePhoto.request, {
     onSuccess: (data) => {
@@ -60,6 +63,11 @@ const UserPhotoAlbum: React.FC = () => {
     deleteMutation.mutate(currentPhoto.Id);
   };
 
+  const handleDeleteConfirmation = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    showDeleteConfirmation();
+  };
+
   const renderPhotoControls = () => {
     const loader = deleteMutation.isLoading || setMutation.isLoading ? (
       <Loader size="sm" />
@@ -71,7 +79,7 @@ const UserPhotoAlbum: React.FC = () => {
           {loader ? loader : (<FontAwesomeIcon icon={faCheckCircle} />)}
           <div>Set photo</div>
         </div>
-        <div className={s.deletePictureBtn} onClick={handleDeletePhoto}>
+        <div className={s.deletePictureBtn} onClick={handleDeleteConfirmation}>
           {loader ? loader : (<FontAwesomeIcon icon={faTimesCircle} />)}
           <div>Delete photo</div>
         </div>
@@ -101,14 +109,14 @@ const UserPhotoAlbum: React.FC = () => {
 
       return (
         <div key={photo.Id} className={photoClasses}>
+          <div className={s.photoCover} onClick={() => setCurrentPhoto(null)}>
+            {isPhotoOpen ? renderPhotoControls() : null}
+          </div>
           <img
             src={photo.Url}
             alt={`profile-photo-${i}`}
             onClick={() => setCurrentPhoto(photo)}
           />
-          <div className={s.photoCover} onClick={() => setCurrentPhoto(null)}>
-            {isPhotoOpen ? renderPhotoControls() : null}
-          </div>
         </div>
       );
     });
@@ -117,6 +125,13 @@ const UserPhotoAlbum: React.FC = () => {
   return (
     <div className={s.photoAlbum}>
       {renderAllUserPhotos()}
+      <ConfirmationModal
+        modalKey="deletePhotoConfirmation"
+        title="Delete profile photo"
+        text="Are you sure you want to delete this photo? This action is irreversible"
+        status={deleteMutation.status}
+        action={handleDeletePhoto}
+      />
     </div>
   );
 };

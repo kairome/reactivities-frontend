@@ -36,4 +36,16 @@
   margin-bottom: 20px;
   text-align: center;
   font-weight: bold;
+  width: 90%;
+}
+
+.modalHeader {
+  display: flex;
+  width: 100%;
+}
+
+.modalClose {
+  margin-left: auto;
+  font-size: 40px;
+  cursor: pointer;
 }

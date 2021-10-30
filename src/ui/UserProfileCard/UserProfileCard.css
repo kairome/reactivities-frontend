@@ -1,0 +1,16 @@
+.profileCard {
+  width: 100%;
+}
+
+.profileHeader {
+  display: flex;
+}
+
+.profilePhoto {
+  border-radius: 20px;
+  margin-right: 30px;
+}
+
+.profileName {
+  font-size: 30px;
+}

@@ -36,6 +36,8 @@ const UploadPhotoModal: React.FC = () => {
     onSuccess: (data) => {
       updateUserData(fetchCurrentUser.name, data);
       handleApiSuccess('Profile photo uploaded!', spawnAlert);
+      setCurrentPhoto(null);
+      setCroppedCanvas(null);
       closeModal();
     },
     onError: (err: any) => {

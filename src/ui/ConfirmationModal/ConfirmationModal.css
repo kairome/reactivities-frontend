@@ -1,0 +1,10 @@
+.text {
+  font-size: 23px;
+  margin-bottom: 40px;
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
