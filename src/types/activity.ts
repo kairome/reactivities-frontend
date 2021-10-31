@@ -3,10 +3,19 @@ export interface ActivityAttendee {
   UserId: string,
 }
 
+export interface ActivityComment {
+  Id: string,
+  Body: string,
+  AuthorId: string,
+  CreatedAt: string,
+  AuthorName: string,
+  AuthorProfileUrl: string,
+}
+
 export interface ActivityItem {
   Category: string,
   City: string,
-  Comments: [],
+  Comments: ActivityComment[],
   Date: string,
   Description: string,
   Id: string,
@@ -37,4 +46,9 @@ export interface ActivityFiltersPayload {
   Cities?: string[],
   IsMy?: boolean,
   Attending?: boolean,
+}
+
+export interface AddCommentPayload {
+  activityId: string,
+  Body: string,
 }

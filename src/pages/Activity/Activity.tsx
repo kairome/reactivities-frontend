@@ -31,6 +31,7 @@ import handleApiErrors from 'api/handleApiErrors';
 import handleApiSuccess from 'api/handleApiSuccess';
 import UserProfileModal from 'ui/UserProfileCard/UserProfileModal';
 import ConfirmationModal from 'ui/ConfirmationModal/ConfirmationModal';
+import ActivityChat from 'pages/Activity/chat/ActivityChat';
 
 const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
   const { id } = props.match.params;
@@ -48,7 +49,7 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
     data: activity,
     isLoading,
     refetch: loadActivity,
-  } = useQuery<ActivityItem>(fetchActivity.name, () => fetchActivity.request(id));
+  } = useQuery<ActivityItem>([fetchActivity.name, id], () => fetchActivity.request(id));
 
   const deleteMutation = useMutation(deleteActivity.name, deleteActivity.request, {
     onSuccess: () => {
@@ -225,11 +226,11 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
 
   const renderAttendees = () => {
     const list = _.map(activity.Attendees, (attendee) => {
-      const youText = attendee.UserId === currentUser.Id ? ' (you)' : null;
+      const name = attendee.UserId === currentUser.Id ? 'You' : attendee.Name;
       return (
         <div key={attendee.UserId} className={s.attendee} onClick={() => handleAttendeeClick(attendee.UserId)}>
           <FontAwesomeIcon icon={faUserAlt} className={s.userIcon} />
-          <span>{attendee.Name}{youText}</span>
+          <span>{name}</span>
         </div>
       );
     });
@@ -290,6 +291,7 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
         </div>
         <div className={s.activityPageInfo}>
           <div className={s.activityPageSubTitle}>Chat</div>
+          <ActivityChat activityId={activity.Id} activityComments={activity.Comments} />
         </div>
       </div>
       <AddEditActivityModal activity={activity} />

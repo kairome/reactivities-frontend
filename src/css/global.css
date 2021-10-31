@@ -10,3 +10,8 @@ html, body {
 :global(#root) {
   height: 100%;
 }
+
+
+input:focus-visible, textarea:focus-visible {
+  outline: none;
+}

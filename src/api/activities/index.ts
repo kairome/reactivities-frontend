@@ -1,4 +1,5 @@
 import activateActivity from './activateActivity';
+import addActivityComment from './addActivityComment';
 import attendActivity from './attendActivity';
 import cancelActivity from './cancelActivity';
 import createEditActivity from './createEditActivity';
@@ -20,4 +21,5 @@ export {
   leaveActivity,
   activateActivity,
   cancelActivity,
+  addActivityComment,
 };

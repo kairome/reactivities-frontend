@@ -51,7 +51,7 @@ const ActivityFilters: React.FC<Props> = (props) => {
       ...filters,
       DateFrom: undefined,
       DateTo: undefined,
-    })
+    });
   };
 
   const handleDateModeChange = (e: React.FormEvent<HTMLInputElement>) => {

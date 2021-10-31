@@ -1,10 +1,10 @@
 import React from 'react';
 
 import _ from 'lodash';
-// import { useHistory } from 'react-router-dom';
 
 import s from './Breadcrumbs.css';
-import history from 'utils/history';
+import { Link } from 'react-router-dom';
+
 interface BreadcrumbTab {
   title: string,
   path?: string,
@@ -15,21 +15,20 @@ interface Props {
 }
 
 const Breadcrumbs: React.FC<Props> = (props) => {
-  // const history = useHistory();
   const renderTabs = () => _.map(props.tabs, (tab, i) => {
     const isLastElem = i === props.tabs.length - 1;
 
     return (
-      <div
+      <Link
         key={tab.title}
         className={`${s.breadcrumb} ${!tab.path ? s.inactive : ''}`}
-        onClick={() => tab.path ? history.push(tab.path) : _.noop}
+        to={tab.path ? tab.path : ''}
       >
         <span>
           {tab.title}
         </span>
         {isLastElem ? null : <span className={s.separator}>{'>'}</span>}
-      </div>
+      </Link>
     );
   });
 

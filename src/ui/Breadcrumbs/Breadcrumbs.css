@@ -7,6 +7,7 @@
   cursor: pointer;
   font-size: 18px;
   color: var(--mainText);
+  text-decoration: none;
 
   &:hover {
     text-decoration: underline;

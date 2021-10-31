@@ -66,7 +66,7 @@ const AddEditActivityModal: React.FC<Props> = (props) => {
   useEffect(() => {
     if (!isModalOpen) {
       setFormErrors({});
-      setFormData(activity ? { ...activity, Date: activity.Date.split('T')[0] } : defaultPayload);
+      setFormData(activity ? activity : defaultPayload);
     }
   }, [isModalOpen]);
 
@@ -76,7 +76,7 @@ const AddEditActivityModal: React.FC<Props> = (props) => {
       return;
     }
 
-    setFormData({ ...activity, Date: activity.Date.split('T')[0] });
+    setFormData(activity);
   }, [activity]);
 
   useEffect(() => {
