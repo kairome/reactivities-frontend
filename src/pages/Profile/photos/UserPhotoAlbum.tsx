@@ -21,7 +21,7 @@ import { useModal } from 'recoil/modalsState';
 const UserPhotoAlbum: React.FC = () => {
   const { spawnAlert } = useAlert();
   const queryClient = useQueryClient();
-  const { Photos, ProfilePhoto } = useRecoilValue(currentUserState);
+  const currentUser = useRecoilValue(currentUserState);
   const [currentPhoto, setCurrentPhoto] = useState<UserPhoto | null>(null);
   const { showModal: showDeleteConfirmation } = useModal('deletePhotoConfirmation');
 
@@ -46,6 +46,10 @@ const UserPhotoAlbum: React.FC = () => {
       handleApiErrors(err.Message, 'Failed to delete photo', spawnAlert);
     },
   });
+
+  if (!currentUser) {
+    return null;
+  }
 
   const handleSetPhoto = () => {
     if (!currentPhoto || setMutation.isLoading) {
@@ -88,6 +92,7 @@ const UserPhotoAlbum: React.FC = () => {
   };
 
   const renderAllUserPhotos = () => {
+    const { ProfilePhoto, Photos } = currentUser;
     if (_.isEmpty(Photos) || Photos.length === 1 && Photos[0].Id === ProfilePhoto?.Id) {
       return (
         <div>

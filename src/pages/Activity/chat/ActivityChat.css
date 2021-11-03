@@ -26,6 +26,7 @@
 .chatMessage {
   margin-bottom: 40px;
   max-width: 400px;
+  white-space: pre-wrap;
 }
 
 .messageHeader {

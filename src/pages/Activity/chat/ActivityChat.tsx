@@ -62,7 +62,7 @@ const ActivityChat: React.FC<Props> = (props) => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && e.shiftKey) {
+    if (e.key === 'Enter' && e.shiftKey && messageText.trim() && !sendMessageMutation.isLoading) {
       handleSendMessage();
     }
   };

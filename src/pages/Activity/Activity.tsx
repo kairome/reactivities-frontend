@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
 import { ActivityItem } from 'types/activity';
@@ -8,7 +8,7 @@ import {
   fetchActivity,
   leaveActivity,
   activateActivity,
-  cancelActivity,
+  cancelActivity, followActivity, unfollowActivity,
 } from 'api/activities';
 import Loader from 'ui/Loader/Loader';
 
@@ -32,6 +32,7 @@ import handleApiSuccess from 'api/handleApiSuccess';
 import UserProfileModal from 'ui/UserProfileCard/UserProfileModal';
 import ConfirmationModal from 'ui/ConfirmationModal/ConfirmationModal';
 import ActivityChat from 'pages/Activity/chat/ActivityChat';
+import NotFound from 'ui/NotFound/NotFound';
 
 const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
   const { id } = props.match.params;
@@ -101,6 +102,34 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
     },
   });
 
+  const followMutation = useMutation(followActivity.name, followActivity.request, {
+    onSuccess: () => {
+      loadActivity();
+      handleApiSuccess('Activity followed!', spawnAlert);
+    },
+    onError: (err: any) => {
+      handleApiErrors(err.Message, 'Cannot follow activity', spawnAlert);
+    },
+  });
+
+  const unfollowMutation = useMutation(unfollowActivity.name, unfollowActivity.request, {
+    onSuccess: () => {
+      loadActivity();
+      handleApiSuccess('Activity unfollowed!', spawnAlert);
+    },
+    onError: (err: any) => {
+      handleApiErrors(err.Message, 'Cannot unfollow activity', spawnAlert);
+    },
+  });
+
+  const isHost = useMemo(() => {
+    if (!activity || !currentUser) {
+      return false;
+    }
+
+    return activity.AuthorId === currentUser.Id;
+  }, [activity, currentUser]);
+
   const handleDeleteConfirmation = () => {
     showDeleteConfirmation();
   };
@@ -114,8 +143,22 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
       history.push('/profile');
       return;
     }
+
     setCurrentAttendeeId(id);
     showUserProfileModal(`userProfile-${id}`);
+  };
+
+  const handleFollowUnfollow = (following: boolean) => {
+    if (!activity) {
+      return;
+    }
+
+    if (following) {
+      unfollowMutation.mutate(activity.Id);
+      return;
+    }
+
+    followMutation.mutate(activity.Id);
   };
 
   if (isLoading) {
@@ -142,14 +185,16 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
 
   if (!activity) {
     return (
-      <div>
-        Activity not found
-      </div>
+      <NotFound
+        entityName="Activity"
+        link="/"
+        linkText="the list of activities"
+      />
     );
   }
 
   const renderAttendButton = () => {
-    if (currentUser.Id === activity.AuthorId) {
+    if (isHost) {
       return null;
     }
 
@@ -180,8 +225,27 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
     );
   };
 
+  const renderFollowUnfollowBtn = () => {
+    if (isHost) {
+      return null;
+    }
+
+    const follower = _.find(activity.Followers, f => f.UserId === currentUser.Id);
+    const following = !_.isEmpty(follower);
+
+    return (
+      <Button
+        theme="primary"
+        text={following ? 'Unfollow' : 'Follow'}
+        className={s.controlButton}
+        onClick={() => handleFollowUnfollow(following)}
+        isLoading={followMutation.isLoading || unfollowMutation.isLoading}
+      />
+    );
+  };
+
   const renderActionBtns = () => {
-    if (currentUser.Id !== activity.AuthorId) {
+    if (!isHost) {
       return null;
     }
 
@@ -227,10 +291,12 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
   const renderAttendees = () => {
     const list = _.map(activity.Attendees, (attendee) => {
       const name = attendee.UserId === currentUser.Id ? 'You' : attendee.Name;
+      const following = _.find(activity.Followers, f => f.UserId === attendee.UserId);
       return (
         <div key={attendee.UserId} className={s.attendee} onClick={() => handleAttendeeClick(attendee.UserId)}>
           <FontAwesomeIcon icon={faUserAlt} className={s.userIcon} />
           <span>{name}</span>
+          {following ? (<span className={s.following}>following</span>) : null}
         </div>
       );
     });
@@ -270,6 +336,7 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
               <h2 className={s.activityPageTitle}>{activity.Title}</h2>
               <h4>By {activity.AuthorName}</h4>
               <div className={s.activityControlButtons}>
+                {renderFollowUnfollowBtn()}
                 {renderAttendButton()}
                 {renderActionBtns()}
               </div>

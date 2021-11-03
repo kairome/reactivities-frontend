@@ -86,3 +86,18 @@
   font-size: 40px;
   color: var(--whiteText);
 }
+
+.followedActivities {
+  margin-left: 60px;
+  font-size: 25px;
+  cursor: pointer;
+
+  a {
+    color: var(--secondaryText);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

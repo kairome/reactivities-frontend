@@ -1,16 +1,16 @@
 import useSignalr from 'utils/useSignalr';
 import { useEffect } from 'react';
 
-const useChatSignalr = (activityId: string) => {
+const useNotificationsSignalr = (userId: string) => {
   const { connection, setUrl } = useSignalr();
 
   useEffect(() => {
-    if (activityId) {
-      setUrl(`chat?activityId=${activityId}`);
+    if (userId) {
+      setUrl(`notifications?userId=${userId}`);
     }
-  }, [activityId]);
+  }, [userId]);
 
   return connection;
 };
 
-export default useChatSignalr;
+export default useNotificationsSignalr;

@@ -9,6 +9,7 @@ import { useRecoilValue } from 'recoil';
 import { currentUserState } from 'recoil/user';
 
 import s from './Toolbar.css';
+import Notifications from 'ui/Noifications/Notifications';
 
 interface Props {
   path: string,
@@ -44,6 +45,7 @@ const Toolbar: React.FC<Props> = (props) => {
       <div className={s.userName}>
         Hello, {currentUser?.DisplayName}!
       </div>
+      <Notifications />
       <Button theme="footnote" text="Logout" onClick={logoutMutation.mutate} />
     </React.Fragment>
   );

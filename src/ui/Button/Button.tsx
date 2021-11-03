@@ -17,6 +17,7 @@ interface Props {
   iconClassName?: string,
   theme: 'primary' | 'action' | 'danger' | 'footnote',
   isLoading?: boolean,
+  title?: string,
 }
 
 const Button: React.FC<Props> = (props) => {

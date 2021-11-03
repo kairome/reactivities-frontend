@@ -8,7 +8,10 @@ import fetchActivities from './fetchActivities';
 import fetchActivity from './fetchActivity';
 import fetchCategories from './fetchCategories';
 import fetchCities from './fetchCities';
+import fetchFollowedActivitiesCount from './fetchFollowedActivitiesCount';
+import followActivity from './followActivity';
 import leaveActivity from './leaveActivity';
+import unfollowActivity from './unfollowActivity';
 
 export {
   fetchActivities,
@@ -22,4 +25,7 @@ export {
   activateActivity,
   cancelActivity,
   addActivityComment,
+  followActivity,
+  unfollowActivity,
+  fetchFollowedActivitiesCount,
 };

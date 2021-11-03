@@ -3,14 +3,11 @@ import React, { useEffect, useState } from 'react';
 import s from './Profile.css';
 import _ from 'lodash';
 
-import { useRecoilValue } from 'recoil';
-import { currentUserState } from 'recoil/user';
-
 import { faFileUpload, faPenSquare } from '@fortawesome/free-solid-svg-icons';
 import Input from 'ui/Input/Input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { InputEvent, InputEventElement, ValidationErrors } from 'types/entities';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { updateUserProfile } from 'api/user';
 import handleApiErrors from 'api/handleApiErrors';
 import { useAlert } from 'recoil/alertState';
@@ -20,6 +17,11 @@ import { fetchCurrentUser } from 'api/account';
 import ProfileContent from 'pages/Profile/ProfileContent';
 import UploadPhotoModal from 'pages/Profile/photos/UploadPhotoModal';
 import { useModal } from 'recoil/modalsState';
+import useQueryUpdate from 'api/useQueryUpdate';
+import NotFound from 'ui/NotFound/NotFound';
+import Loader from 'ui/Loader/Loader';
+import { fetchFollowedActivitiesCount } from 'api/activities';
+import { Link } from 'react-router-dom';
 
 const defaultEditState = {
   name: false,
@@ -28,9 +30,13 @@ const defaultEditState = {
 };
 
 const Profile: React.FC = () => {
-  const currentUser = useRecoilValue(currentUserState);
   const { spawnAlert } = useAlert();
-  const queryClient = useQueryClient();
+  const updateQuery = useQueryUpdate();
+  const { data: currentUser, isLoading } = useQuery(fetchCurrentUser.name, fetchCurrentUser.request);
+
+  const {
+    data: activitiesFollowed,
+  } = useQuery(fetchFollowedActivitiesCount.name, fetchFollowedActivitiesCount.request);
 
   const [editState, setEditState] = useState(defaultEditState);
 
@@ -47,7 +53,7 @@ const Profile: React.FC = () => {
   const updateMutation = useMutation(updateUserProfile.name, updateUserProfile.request, {
     onSuccess: (data: CurrentUser) => {
       handleApiSuccess('User profile updated!', spawnAlert);
-      queryClient.setQueryData(fetchCurrentUser.name, data);
+      updateQuery(fetchCurrentUser.name, data);
       resetEditState();
     },
     onError: (err: any) => {
@@ -73,8 +79,20 @@ const Profile: React.FC = () => {
     setEditState(defaultEditState);
   };
 
+  if (isLoading) {
+    return (
+      <Loader />
+    );
+  }
+
   if (!currentUser) {
-    return (<div>User not found</div>);
+    return (
+      <NotFound
+        entityName="User"
+        link="/"
+        linkText="the list of activities"
+      />
+    );
   }
 
   const handleEditState = (field: keyof typeof editState) => {
@@ -181,6 +199,9 @@ const Profile: React.FC = () => {
             <div className={s.userNameEmail}>User name: <em>{currentUser.UserName}</em></div>
             {renderEditableField('email')}
             {renderEditableField('bio')}
+          </div>
+          <div className={s.followedActivities}>
+            <Link to="/?Following=true">Following {activitiesFollowed} activities</Link>
           </div>
         </div>
         <ProfileContent />

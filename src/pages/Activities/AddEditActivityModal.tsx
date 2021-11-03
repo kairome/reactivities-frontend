@@ -15,6 +15,7 @@ import handleApiSuccess from 'api/handleApiSuccess';
 import { ValidationErrors } from 'types/entities';
 
 import DateInput from 'ui/DateInput/DateInput';
+import history from 'utils/history';
 
 interface Props {
   activity: ActivityItem | null,
@@ -46,6 +47,12 @@ const AddEditActivityModal: React.FC<Props> = (props) => {
   const addEditMutation = useMutation(createEditActivity.name, createEditActivity.request, {
     onSuccess: (data, editPayload) => {
       handleApiSuccess(editPayload.Id ? 'Activity edited!' : 'Activity added!', spawnAlert);
+
+      if (!editPayload.Id) {
+        history.push(`/activity/${data.Id}`);
+        closeModal();
+        return;
+      }
 
       if (props.updateListData) {
         props.updateListData();

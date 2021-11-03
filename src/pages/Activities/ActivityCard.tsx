@@ -4,15 +4,24 @@ import _ from 'lodash';
 import s from 'pages/Activities/Activities.css';
 import dayjs from 'dayjs';
 import Button from 'ui/Button/Button';
-import { faEye, faPenNib, faHouseUser, faBriefcase, faBan, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import history from 'utils/history';
+import {
+  faEye,
+  faPenNib,
+  faHouseUser,
+  faBriefcase,
+  faBan,
+  faCheckCircle,
+  faEyeSlash,
+} from '@fortawesome/free-solid-svg-icons';
 import { Tooltip } from 'react-tippy';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AttendeesDropdown from 'pages/Activities/AttendeesDropdown';
+import { Link } from 'react-router-dom';
 
 interface Props {
   activity: ActivityItem,
   currentUserId: string,
+  onFollowUnfollow: (a: ActivityItem, following: boolean) => void,
   onEdit: (a: ActivityItem) => void,
   onCancelActivate: (a: ActivityItem) => void,
   isLoading: boolean,
@@ -78,16 +87,38 @@ const ActivityCard: React.FC<Props> = (props) => {
           theme="action"
           icon={faPenNib}
           className={s.controlBtn}
+          title="Edit"
           onClick={() => props.onEdit(activity)}
         />
         <Button
           theme="action"
           icon={activity.IsCancelled ? faCheckCircle : faBan}
           className={s.controlBtn}
+          title={activity.IsCancelled ? 'Activate' : 'Cancel'}
           onClick={() => props.onCancelActivate(activity)}
           disabled={isLoading}
         />
       </React.Fragment>
+    );
+  };
+
+  const renderFollowUnfollow = () => {
+    if (isHost) {
+      return null;
+    }
+
+    const follower = _.find(activity.Followers, f => f.UserId === currentUserId);
+    const following = !_.isEmpty(follower);
+
+    return (
+      <Button
+        theme="action"
+        icon={following ? faEyeSlash : faEye}
+        title={following ? 'Unfollow' : 'Follow'}
+        className={s.controlBtn}
+        onClick={() => props.onFollowUnfollow(activity, following)}
+        disabled={isLoading}
+      />
     );
   };
 
@@ -96,14 +127,9 @@ const ActivityCard: React.FC<Props> = (props) => {
     <div key={activity.Id} className={s.activityCard}>
       {renderCancelledStatus()}
       <div className={s.activityHeader}>
-        <h3 onClick={() => history.push(`/activity/${activity.Id}`)}>{activity.Title}</h3>
+        <Link to={`/activity/${activity.Id}`} className={s.activityCardTitle}>{activity.Title}</Link>
         <div className={s.controlBtns}>
-          <Button
-            theme="action"
-            icon={faEye}
-            className={s.controlBtn}
-            onClick={() => history.push(`/activity/${activity.Id}`)}
-          />
+          {renderFollowUnfollow()}
           {renderControlBtns()}
         </div>
       </div>
@@ -116,7 +142,7 @@ const ActivityCard: React.FC<Props> = (props) => {
           <div className={s.activityDate}>By {activity.AuthorName}</div>
           <Tooltip
             title={date.format('DD MMMM YYYY, HH:mm')}
-            position="top"
+            position="top-start"
             trigger="mouseenter"
           >
             <div className={s.activityDate}>{date.fromNow()}</div>

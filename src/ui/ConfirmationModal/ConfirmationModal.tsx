@@ -20,6 +20,10 @@ const ConfirmationModal: React.FC<Props> = (props) => {
     if (status === 'success') {
       closeModal();
     }
+
+    return () => {
+      closeModal();
+    };
   }, [status]);
 
   const isLoading = status === 'loading';

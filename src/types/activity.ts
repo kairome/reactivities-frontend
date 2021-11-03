@@ -24,6 +24,7 @@ export interface ActivityItem {
   AuthorName: string,
   AuthorId: string,
   Attendees: ActivityAttendee[],
+  Followers: ActivityAttendee[],
   IsCancelled: boolean,
 }
 
@@ -46,6 +47,7 @@ export interface ActivityFiltersPayload {
   Cities?: string[],
   IsMy?: boolean,
   Attending?: boolean,
+  Following?: boolean,
 }
 
 export interface AddCommentPayload {

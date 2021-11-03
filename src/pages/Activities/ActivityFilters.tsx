@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ActivityFiltersPayload } from 'types/activity';
 
 import Calendar from 'react-calendar';
@@ -11,8 +11,10 @@ import { MultiSelectOption } from 'types/entities';
 import { useQuery } from 'react-query';
 import { fetchCategories, fetchCities } from 'api/activities';
 import Input from 'ui/Input/Input';
+import queryString from 'query-string';
 
 import s from './Activities.css';
+import history from 'utils/history';
 
 interface Props {
   filters: ActivityFiltersPayload,
@@ -27,6 +29,17 @@ const ActivityFilters: React.FC<Props> = (props) => {
 
   const { data: categories } = useQuery(fetchCategories.name, fetchCategories.request);
   const { data: cities } = useQuery(fetchCities.name, fetchCities.request);
+
+  useEffect(() => {
+    const search = history.location.search;
+    if (search) {
+      const parsed = queryString.parse(search);
+      props.onChange({
+        ...filters,
+        ...parsed,
+      });
+    }
+  }, []);
 
   const handleCalendarChange = (dates: Date[] | Date) => {
     if (_.isArray(dates)) {

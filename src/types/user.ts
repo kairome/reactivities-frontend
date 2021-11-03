@@ -17,6 +17,7 @@ export interface CurrentUser {
   UserName: string,
   ProfilePhoto: UserPhoto | null,
   Photos: UserPhoto[],
+  Notifications: UserNotification[],
 }
 
 export interface UserProfileItem {
@@ -24,4 +25,21 @@ export interface UserProfileItem {
   Name: string,
   PhotoUrl: string,
   Bio: string,
+}
+
+export enum UserNotificationType {
+  Edited = 'Edited',
+  Deleted = 'Deleted',
+  Cancelled = 'Cancelled',
+  Activated = 'Activated',
+  NewMessages = 'NewMessages',
+}
+
+export interface UserNotification {
+  ActivityId: string,
+  ActivityTitle: string,
+  CreatedAt: string,
+  Id: string,
+  IsRead: boolean,
+  Type: UserNotificationType,
 }

@@ -1,0 +1,14 @@
+.notFoundContainer {
+  width: 100%;
+}
+
+.notFound {
+  font-size: 23px;
+  text-align: center;
+}
+
+.link {
+  margin-top: 10px;
+  display: inline-block;
+  color: var(--link);
+}

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { activateActivity, cancelActivity, fetchActivities } from 'api/activities';
+import { useMutation, useQuery } from 'react-query';
+import { activateActivity, cancelActivity, fetchActivities, followActivity, unfollowActivity } from 'api/activities';
 import { ActivityFiltersPayload, ActivityItem } from 'types/activity';
 import _ from 'lodash';
 
@@ -24,11 +24,12 @@ import { currentUserState } from 'recoil/user';
 import ActivityCard from 'pages/Activities/ActivityCard';
 import handleApiSuccess from 'api/handleApiSuccess';
 import handleApiErrors from 'api/handleApiErrors';
+import useQueryUpdate from 'api/useQueryUpdate';
 
 dayjs.extend(relativeTime);
 
 const Activities: React.FC = () => {
-  const queryClient = useQueryClient();
+  const updateQuery = useQueryUpdate();
   const currentUser = useRecoilValue(currentUserState);
   const { spawnAlert } = useAlert();
 
@@ -45,10 +46,15 @@ const Activities: React.FC = () => {
   const [formType, setFormType] = useRecoilState(activitiesFormState);
   const { showModal } = useModal('addEditActivity');
 
+  const updateActivities = (data: ActivityItem) => {
+    updateQuery([fetchActivities.name, filters],
+      (oldData: ActivityItem[]) => _.map(oldData, d => d.Id === data.Id ? data : d),
+    );
+  };
+
   const activateMutation = useMutation(activateActivity.name, activateActivity.request, {
     onSuccess: (data) => {
-      queryClient.setQueryData<ActivityItem[]>(
-        [fetchActivities.name, filters], (oldData) => _.map(oldData, d => d.Id === data.Id ? data : d));
+      updateActivities(data);
       handleApiSuccess('Activity activated!', spawnAlert);
     },
     onError: (error: any) => {
@@ -58,12 +64,31 @@ const Activities: React.FC = () => {
 
   const cancelMutation = useMutation(cancelActivity.name, cancelActivity.request, {
     onSuccess: (data) => {
-      queryClient.setQueryData<ActivityItem[]>(
-        [fetchActivities.name, filters], (oldData) => _.map(oldData, d => d.Id === data.Id ? data : d));
+      updateActivities(data);
       handleApiSuccess('Activity canceled!', spawnAlert);
     },
     onError: (error: any) => {
       handleApiErrors(error.Message, 'Cannot cancel the activity', spawnAlert);
+    },
+  });
+
+  const followMutation = useMutation(followActivity.name, followActivity.request, {
+    onSuccess: (data) => {
+      updateActivities(data);
+      handleApiSuccess('Activity followed!', spawnAlert);
+    },
+    onError: (err: any) => {
+      handleApiErrors(err.Message, 'Cannot follow activity', spawnAlert);
+    },
+  });
+
+  const unfollowMutation = useMutation(unfollowActivity.name, unfollowActivity.request, {
+    onSuccess: (data) => {
+      updateActivities(data);
+      handleApiSuccess('Activity unfollowed!', spawnAlert);
+    },
+    onError: (err: any) => {
+      handleApiErrors(err.Message, 'Cannot unfollow activity', spawnAlert);
     },
   });
 
@@ -93,6 +118,15 @@ const Activities: React.FC = () => {
     cancelMutation.mutate(activity.Id);
   };
 
+  const handleFollowUnfollow = (activity: ActivityItem, following: boolean) => {
+    if (following) {
+      unfollowMutation.mutate(activity.Id);
+      return;
+    }
+
+    followMutation.mutate(activity.Id);
+  };
+
   const handleEditActivity = (activity: ActivityItem) => {
     showModal();
     setFormType('edit');
@@ -100,14 +134,17 @@ const Activities: React.FC = () => {
   };
 
   const renderActivityCard = (activity: ActivityItem) => {
+    const isLoading = cancelMutation.isLoading || activateMutation.isLoading
+      || followMutation.isLoading || unfollowMutation.isLoading;
     return (
       <ActivityCard
         key={activity.Id}
         activity={activity}
         currentUserId={currentUser.Id}
         onEdit={handleEditActivity}
-        isLoading={cancelMutation.isLoading || activateMutation.isLoading}
         onCancelActivate={handleCancelActivate}
+        onFollowUnfollow={handleFollowUnfollow}
+        isLoading={isLoading}
       />
     );
   };
