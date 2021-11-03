@@ -5,6 +5,7 @@ html, body {
   height: 100vh;
   background: var(--pageBg);
   overflow-y: hidden;
+  font-family: 'Karla', sans-serif;
 }
 
 :global(#root) {

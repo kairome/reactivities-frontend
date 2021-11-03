@@ -179,6 +179,7 @@ const Activities: React.FC = () => {
 
     return (
       <div className={s.activityCards}>
+        {renderSortGroup()}
         {_.isEmpty(list) ? 'Activities not found' : list}
       </div>
     );
@@ -211,24 +212,6 @@ const Activities: React.FC = () => {
           className={s.filterCheckbox}
           onChange={() => setGroupByDate(!groupByDate)}
         />
-        <Checkbox
-          label="My activities"
-          isChecked={Boolean(filters.IsMy)}
-          className={s.filterCheckbox}
-          onChange={() => setFilters({ ...filters, IsMy: !filters.IsMy })}
-        />
-        <Checkbox
-          label="I'm attending"
-          className={s.filterCheckbox}
-          isChecked={Boolean(filters.Attending)}
-          onChange={() => setFilters({ ...filters, Attending: !filters.Attending })}
-        />
-        <Checkbox
-          label="I'm following"
-          isChecked={Boolean(filters.Following)}
-          className={s.filterCheckbox}
-          onChange={() => setFilters({ ...filters, Following: !filters.Following })}
-        />
       </div>
     );
   };
@@ -236,7 +219,6 @@ const Activities: React.FC = () => {
   return (
     <div className={s.activitiesPage}>
       <TabTitle title="Activities" />
-      {renderSortGroup()}
       <div className={s.activitiesContainer}>
         {renderActivities()}
         <ActivityFilters

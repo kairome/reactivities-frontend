@@ -170,7 +170,7 @@
 .sortGroupContainer {
   display: flex;
   align-items: baseline;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .sortLabel {
@@ -214,6 +214,7 @@
   font-size: 25px;
   color: var(--mainText);
   margin-bottom: 10px;
+  font-weight: bold;
 }
 
 .filterCheckbox {

@@ -7,7 +7,7 @@ import _ from 'lodash';
 import Radio from 'ui/Radio/Radio';
 import Button from 'ui/Button/Button';
 import Select from 'ui/Select/Select';
-import { MultiSelectOption } from 'types/entities';
+import { MultiSelectOption, SelectOption } from 'types/entities';
 import { useQuery } from 'react-query';
 import { fetchCategories, fetchCities } from 'api/activities';
 import Input from 'ui/Input/Input';
@@ -90,6 +90,15 @@ const ActivityFilters: React.FC<Props> = (props) => {
     });
   };
 
+  const handleParticipationChange = (values: MultiSelectOption) => {
+    const newFilters = { ...filters };
+
+    newFilters.IsMy = !_.isEmpty(_.find(values, v => v.value === 'host'));
+    newFilters.Attending = !_.isEmpty(_.find(values, v => v.value === 'attendee'));
+    newFilters.Following = !_.isEmpty(_.find(values, v => v.value === 'follower'));
+    props.onChange(newFilters);
+  };
+
   const handleCitiesChange = (values: MultiSelectOption) => {
     props.onChange({
       ...filters,
@@ -102,6 +111,39 @@ const ActivityFilters: React.FC<Props> = (props) => {
       ...filters,
       Title: e.currentTarget.value,
     });
+  };
+
+  const participationOptions: SelectOption[] = [
+    {
+      label: 'Hosting',
+      value: 'host',
+    },
+    {
+      label: 'Attending',
+      value: 'attendee',
+    },
+    {
+      label: 'Following',
+      value: 'follower',
+    },
+  ];
+
+  const getParticipationValues = () => {
+    return _.reduce(participationOptions, (acc, option) => {
+      if (filters.IsMy && option.value === 'host') {
+        return [...acc, option.value];
+      }
+
+      if (filters.Attending && option.value === 'attendee') {
+        return [...acc, option.value];
+      }
+
+      if (filters.Following && option.value === 'follower') {
+        return [...acc, option.value];
+      }
+
+      return acc;
+    }, [] as string[]);
   };
 
   const dateSwitcher = [
@@ -120,6 +162,15 @@ const ActivityFilters: React.FC<Props> = (props) => {
         onChange={handleTitleChange}
       />
       <div>
+        <Select
+          label="Participation"
+          value={getParticipationValues()}
+          options={participationOptions}
+          onChange={handleParticipationChange}
+          placeholder="Select participation options"
+          className={s.selectWrapper}
+          multi
+        />
         <Select
           label="Categories"
           value={filters.Categories}
