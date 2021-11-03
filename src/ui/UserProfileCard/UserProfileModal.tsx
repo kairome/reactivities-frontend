@@ -6,6 +6,8 @@ import { useQuery } from 'react-query';
 import { fetchUserProfile } from 'api/user';
 import Button from 'ui/Button/Button';
 import { useModal } from 'recoil/modalsState';
+import { UserActivitiesStats } from 'types/user';
+import fetchUserActivitiesStats from 'api/user/fetchUserActivitiesStats';
 
 interface Props {
   userId: string,
@@ -16,7 +18,7 @@ const modalKey = 'userProfile';
 const UserProfileModal: React.FC<Props> = (props) => {
   const { userId } = props;
 
-  const { closeModal } = useModal('');
+  const { closeModal, isModalOpen } = useModal(`userProfile-${userId}`);
 
   const {
     isLoading,
@@ -26,11 +28,20 @@ const UserProfileModal: React.FC<Props> = (props) => {
     enabled: false,
   });
 
+  const {
+    data: userStats,
+    refetch: loadStats,
+  } = useQuery<UserActivitiesStats>(
+    [fetchUserActivitiesStats.name, userId], () => fetchUserActivitiesStats.request(userId), {
+      enabled: false,
+    });
+
   useEffect(() => {
-    if (userId) {
+    if (userId && isModalOpen) {
       loadUserProfile();
+      loadStats();
     }
-  }, [userId]);
+  }, [userId, isModalOpen]);
 
   const renderContent = () => {
     if (isLoading) {
@@ -40,14 +51,14 @@ const UserProfileModal: React.FC<Props> = (props) => {
     }
 
     return (
-      <UserProfileCard profile={userProfile} />
+      <UserProfileCard profile={userProfile} stats={userStats ?? null} />
     );
   };
 
   return (
     <Modal title="User profile" modalKey={`${modalKey}-${userId}`}>
       {renderContent()}
-      <Button theme="primary" text="Close" onClick={() => closeModal(`${modalKey}-${userId}`)}/>
+      <Button theme="primary" text="Close" onClick={() => closeModal(`${modalKey}-${userId}`)} />
     </Modal>
   );
 };

@@ -17,6 +17,9 @@ import { Tooltip } from 'react-tippy';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AttendeesDropdown from 'pages/Activities/AttendeesDropdown';
 import { Link } from 'react-router-dom';
+import history from 'utils/history';
+import UserProfileModal from 'ui/UserProfileCard/UserProfileModal';
+import { useModal } from 'recoil/modalsState';
 
 interface Props {
   activity: ActivityItem,
@@ -32,6 +35,8 @@ const ActivityCard: React.FC<Props> = (props) => {
 
   const date = dayjs(activity.Date);
   const isHost = currentUserId === activity.AuthorId;
+
+  const { showModal } = useModal(`userProfile-${activity.AuthorId}`);
 
   const renderAttendance = () => {
     const { Attendees } = activity;
@@ -122,6 +127,15 @@ const ActivityCard: React.FC<Props> = (props) => {
     );
   };
 
+  const handleHostClick = () => {
+    if (activity.AuthorId === currentUserId) {
+      history.push('/profile');
+      return;
+    }
+
+    showModal();
+  };
+
   const category = activity.Category ? (<div className={s.activityCategory}>{activity.Category}</div>) : null;
   return (
     <div key={activity.Id} className={s.activityCard}>
@@ -139,7 +153,9 @@ const ActivityCard: React.FC<Props> = (props) => {
       {renderAttendance()}
       <div className={s.activitiesFooter}>
         <div>
-          <div className={s.activityDate}>By {activity.AuthorName}</div>
+          <div className={s.activityHost} onClick={handleHostClick}>
+            Hosted by {activity.AuthorId === currentUserId ? 'you' : activity.AuthorName}
+          </div>
           <Tooltip
             title={date.format('DD MMMM YYYY, HH:mm')}
             position="top-start"
@@ -150,6 +166,7 @@ const ActivityCard: React.FC<Props> = (props) => {
         </div>
         {category}
       </div>
+      <UserProfileModal userId={activity.AuthorId} />
     </div>
   );
 };

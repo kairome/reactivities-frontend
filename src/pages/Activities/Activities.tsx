@@ -25,6 +25,8 @@ import ActivityCard from 'pages/Activities/ActivityCard';
 import handleApiSuccess from 'api/handleApiSuccess';
 import handleApiErrors from 'api/handleApiErrors';
 import useQueryUpdate from 'api/useQueryUpdate';
+import history from 'utils/history';
+import TabTitle from 'ui/TabTitle/TabTitle';
 
 dayjs.extend(relativeTime);
 
@@ -133,6 +135,14 @@ const Activities: React.FC = () => {
     setModalActivity(activity);
   };
 
+  const handleClear = () => {
+    history.replace({
+      search: '',
+    });
+
+    setFilters({ DateSort: filters.DateSort });
+  };
+
   const renderActivityCard = (activity: ActivityItem) => {
     const isLoading = cancelMutation.isLoading || activateMutation.isLoading
       || followMutation.isLoading || unfollowMutation.isLoading;
@@ -169,7 +179,7 @@ const Activities: React.FC = () => {
 
     return (
       <div className={s.activityCards}>
-        {list}
+        {_.isEmpty(list) ? 'Activities not found' : list}
       </div>
     );
   };
@@ -209,8 +219,15 @@ const Activities: React.FC = () => {
         />
         <Checkbox
           label="I'm attending"
+          className={s.filterCheckbox}
           isChecked={Boolean(filters.Attending)}
           onChange={() => setFilters({ ...filters, Attending: !filters.Attending })}
+        />
+        <Checkbox
+          label="I'm following"
+          isChecked={Boolean(filters.Following)}
+          className={s.filterCheckbox}
+          onChange={() => setFilters({ ...filters, Following: !filters.Following })}
         />
       </div>
     );
@@ -218,13 +235,14 @@ const Activities: React.FC = () => {
 
   return (
     <div className={s.activitiesPage}>
+      <TabTitle title="Activities" />
       {renderSortGroup()}
       <div className={s.activitiesContainer}>
         {renderActivities()}
         <ActivityFilters
           filters={filters}
           onChange={setFilters}
-          onClear={() => setFilters({ DateSort: filters.DateSort })}
+          onClear={handleClear}
         />
       </div>
       <AddEditActivityModal

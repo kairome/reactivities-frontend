@@ -65,6 +65,15 @@
   max-width: 500px;
   border-radius: 12px;
   margin-bottom: 40px;
+
+  h4 {
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: normal;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .activityPageSidebar {

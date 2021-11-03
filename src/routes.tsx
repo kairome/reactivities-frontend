@@ -5,7 +5,6 @@ import _ from 'lodash';
 import Activity from 'pages/Activity/Activity';
 import Profile from 'pages/Profile/Profile';
 
-
 const routes = [
   {
     title: 'Activity',
@@ -35,9 +34,11 @@ const Routes: React.FC = () => {
   };
 
   return (
-    <Switch>
-      {renderRoutes()}
-    </Switch>
+    <React.Fragment>
+      <Switch>
+        {renderRoutes()}
+      </Switch>
+    </React.Fragment>
   );
 };
 

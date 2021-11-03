@@ -43,3 +43,9 @@ export interface UserNotification {
   IsRead: boolean,
   Type: UserNotificationType,
 }
+
+export interface UserActivitiesStats {
+  ActivitiesHosting: number,
+  ActivitiesFollowing: number,
+  ActivitiesAttending: number,
+}

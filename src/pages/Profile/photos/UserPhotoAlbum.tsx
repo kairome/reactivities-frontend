@@ -8,7 +8,7 @@ import { UserPhoto } from 'types/user';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { deleteUserPhoto, setUserProfilePhoto } from 'api/user';
 import { useAlert } from 'recoil/alertState';
 import handleApiSuccess from 'api/handleApiSuccess';
@@ -17,17 +17,21 @@ import handleApiErrors from 'api/handleApiErrors';
 import Loader from 'ui/Loader/Loader';
 import ConfirmationModal from 'ui/ConfirmationModal/ConfirmationModal';
 import { useModal } from 'recoil/modalsState';
+import useQueryUpdate from 'api/useQueryUpdate';
+import useOutsideClick from 'utils/useOutsideClick';
 
 const UserPhotoAlbum: React.FC = () => {
   const { spawnAlert } = useAlert();
-  const queryClient = useQueryClient();
+  const updateQuery = useQueryUpdate();
   const currentUser = useRecoilValue(currentUserState);
   const [currentPhoto, setCurrentPhoto] = useState<UserPhoto | null>(null);
   const { showModal: showDeleteConfirmation } = useModal('deletePhotoConfirmation');
 
+  const container = useOutsideClick(() => setCurrentPhoto(null));
+
   const setMutation = useMutation(setUserProfilePhoto.name, setUserProfilePhoto.request, {
     onSuccess: (data) => {
-      queryClient.setQueryData(fetchCurrentUser.name, data);
+      updateQuery(fetchCurrentUser.name, data);
       setCurrentPhoto(null);
       handleApiSuccess('Profile photo set!', spawnAlert);
     },
@@ -38,7 +42,7 @@ const UserPhotoAlbum: React.FC = () => {
 
   const deleteMutation = useMutation(deleteUserPhoto.name, deleteUserPhoto.request, {
     onSuccess: (data) => {
-      queryClient.setQueryData(fetchCurrentUser.name, data);
+      updateQuery(fetchCurrentUser.name, data);
       setCurrentPhoto(null);
       handleApiSuccess('Photo deleted!', spawnAlert);
     },
@@ -128,7 +132,7 @@ const UserPhotoAlbum: React.FC = () => {
   };
 
   return (
-    <div className={s.photoAlbum}>
+    <div className={s.photoAlbum} ref={container}>
       {renderAllUserPhotos()}
       <ConfirmationModal
         modalKey="deletePhotoConfirmation"

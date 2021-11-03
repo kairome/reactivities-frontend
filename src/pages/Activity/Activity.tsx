@@ -33,6 +33,7 @@ import UserProfileModal from 'ui/UserProfileCard/UserProfileModal';
 import ConfirmationModal from 'ui/ConfirmationModal/ConfirmationModal';
 import ActivityChat from 'pages/Activity/chat/ActivityChat';
 import NotFound from 'ui/NotFound/NotFound';
+import TabTitle from 'ui/TabTitle/TabTitle';
 
 const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
   const { id } = props.match.params;
@@ -325,8 +326,18 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
     );
   };
 
+  const handleHostClick = () => {
+    if (isHost) {
+      history.push('/profile');
+      return;
+    }
+
+    showUserProfileModal(`userProfile-${activity.AuthorId}`);
+  };
+
   return (
     <div className={s.activityPage}>
+      <TabTitle title={`Activity - ${activity.Title}`} />
       <div className={s.content}>
         <Breadcrumbs tabs={[{ title: 'All activities', path: '/' }, { title: activity.Title }]} />
         <div className={s.activityPageTop}>
@@ -334,7 +345,7 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
             <div className={s.activityPageHeader}>
               {renderCancelStatus()}
               <h2 className={s.activityPageTitle}>{activity.Title}</h2>
-              <h4>By {activity.AuthorName}</h4>
+              <h4 onClick={handleHostClick}>Hosted by {isHost ? 'you' : activity.AuthorName}</h4>
               <div className={s.activityControlButtons}>
                 {renderFollowUnfollowBtn()}
                 {renderAttendButton()}
@@ -369,6 +380,7 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
         status={deleteMutation.status}
         action={handleDeleteActivity}
       />
+      <UserProfileModal userId={activity.AuthorId} />
     </div>
   );
 };

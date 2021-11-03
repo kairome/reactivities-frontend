@@ -12,7 +12,7 @@ import { updateUserProfile } from 'api/user';
 import handleApiErrors from 'api/handleApiErrors';
 import { useAlert } from 'recoil/alertState';
 import handleApiSuccess from 'api/handleApiSuccess';
-import { CurrentUser } from 'types/user';
+import { CurrentUser, UserActivitiesStats } from 'types/user';
 import { fetchCurrentUser } from 'api/account';
 import ProfileContent from 'pages/Profile/ProfileContent';
 import UploadPhotoModal from 'pages/Profile/photos/UploadPhotoModal';
@@ -20,8 +20,9 @@ import { useModal } from 'recoil/modalsState';
 import useQueryUpdate from 'api/useQueryUpdate';
 import NotFound from 'ui/NotFound/NotFound';
 import Loader from 'ui/Loader/Loader';
-import { fetchFollowedActivitiesCount } from 'api/activities';
 import { Link } from 'react-router-dom';
+import TabTitle from 'ui/TabTitle/TabTitle';
+import fetchUserActivitiesStats from 'api/user/fetchUserActivitiesStats';
 
 const defaultEditState = {
   name: false,
@@ -32,11 +33,15 @@ const defaultEditState = {
 const Profile: React.FC = () => {
   const { spawnAlert } = useAlert();
   const updateQuery = useQueryUpdate();
-  const { data: currentUser, isLoading } = useQuery(fetchCurrentUser.name, fetchCurrentUser.request);
+  const { data: currentUser, isLoading } = useQuery<CurrentUser>(fetchCurrentUser.name, fetchCurrentUser.request);
 
   const {
-    data: activitiesFollowed,
-  } = useQuery(fetchFollowedActivitiesCount.name, fetchFollowedActivitiesCount.request);
+    data: userStats,
+    refetch: loadStats,
+  } = useQuery<UserActivitiesStats>(
+    [fetchUserActivitiesStats.name, currentUser?.Id], () => fetchUserActivitiesStats.request(currentUser?.Id ?? ''), {
+      enabled: false,
+    });
 
   const [editState, setEditState] = useState(defaultEditState);
 
@@ -72,6 +77,7 @@ const Profile: React.FC = () => {
         email: currentUser.Email ?? '',
         bio: currentUser.Bio,
       });
+      loadStats();
     }
   }, [currentUser]);
 
@@ -189,8 +195,23 @@ const Profile: React.FC = () => {
     );
   };
 
+  const renderStats = () => {
+    if (_.isEmpty(userStats) || !userStats) {
+      return null;
+    }
+
+    return (
+      <div className={s.followedActivities}>
+        <Link to="/?IsMy=true">Hosting {userStats.ActivitiesHosting} activities</Link>
+        <Link to="/?Attending=true">Attending {userStats.ActivitiesAttending} activities</Link>
+        <Link to="/?Following=true">Following {userStats.ActivitiesFollowing} activities</Link>
+      </div>
+    );
+  };
+
   return (
     <div className={s.profilePage}>
+      <TabTitle title={`Profile - ${currentUser.DisplayName}`} />
       <div className={s.content}>
         <div className={s.profileHeader}>
           {renderProfilePhoto()}
@@ -200,9 +221,7 @@ const Profile: React.FC = () => {
             {renderEditableField('email')}
             {renderEditableField('bio')}
           </div>
-          <div className={s.followedActivities}>
-            <Link to="/?Following=true">Following {activitiesFollowed} activities</Link>
-          </div>
+          {renderStats()}
         </div>
         <ProfileContent />
       </div>

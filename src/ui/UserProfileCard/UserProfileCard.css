@@ -14,3 +14,9 @@
 .profileName {
   font-size: 30px;
 }
+
+.userStat {
+  font-size: 18px;
+  color: var(--mainText);
+  margin-bottom: 10px;
+}
