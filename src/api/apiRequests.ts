@@ -4,7 +4,7 @@ import history from 'utils/history';
 
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:5000/api',
-  timeout: 5000,
+  timeout: 10000,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',

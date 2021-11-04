@@ -48,6 +48,8 @@ export interface ActivityFiltersPayload {
   IsMy?: boolean,
   Attending?: boolean,
   Following?: boolean,
+  CurrentPage: number,
+  PageSize: number,
 }
 
 export interface AddCommentPayload {

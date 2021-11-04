@@ -24,34 +24,47 @@ import { currentUserState } from 'recoil/user';
 import ActivityCard from 'pages/Activities/ActivityCard';
 import handleApiSuccess from 'api/handleApiSuccess';
 import handleApiErrors from 'api/handleApiErrors';
-import useQueryUpdate from 'api/useQueryUpdate';
 import history from 'utils/history';
 import TabTitle from 'ui/TabTitle/TabTitle';
+import { PaginatedList } from 'types/entities';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 dayjs.extend(relativeTime);
 
+const defaultFilters = {
+  DateSort: 'Desc' as 'Desc',
+  PageSize: 5,
+  CurrentPage: 1,
+};
+
 const Activities: React.FC = () => {
-  const updateQuery = useQueryUpdate();
   const currentUser = useRecoilValue(currentUserState);
   const { spawnAlert } = useAlert();
 
-  const [filters, setFilters] = useState<ActivityFiltersPayload>({
-    DateSort: 'Desc',
-  });
+  const [filters, setFilters] = useState<ActivityFiltersPayload>(defaultFilters);
 
   const [groupByDate, setGroupByDate] = useState(false);
 
-  const { data: activities, isLoading, refetch: loadActivities } = useQuery<ActivityItem[]>(
+  const { data: requestActivities, isLoading } = useQuery<PaginatedList<ActivityItem>>(
     [fetchActivities.name, filters], () => fetchActivities.request(filters));
+
+  const [activities, setActivities] = useState<ActivityItem[]>([]);
+  const [fetchingNextPage, setFetchingNextPage] = useState(false);
+
+  const hasMorePages = useMemo(() => {
+    if (!requestActivities) {
+      return false;
+    }
+
+    return requestActivities.CurrentPage < requestActivities.TotalPages;
+  }, [requestActivities]);
 
   const [modalActivity, setModalActivity] = useState<ActivityItem | null>(null);
   const [formType, setFormType] = useRecoilState(activitiesFormState);
   const { showModal } = useModal('addEditActivity');
 
-  const updateActivities = (data: ActivityItem) => {
-    updateQuery([fetchActivities.name, filters],
-      (oldData: ActivityItem[]) => _.map(oldData, d => d.Id === data.Id ? data : d),
-    );
+  const updateActivities = (newAct: ActivityItem) => {
+    setActivities((oldActivities) => _.map(oldActivities, (act) => act.Id === newAct.Id ? newAct : act));
   };
 
   const activateMutation = useMutation(activateActivity.name, activateActivity.request, {
@@ -111,6 +124,18 @@ const Activities: React.FC = () => {
     }
   }, [activities]);
 
+  useEffect(() => {
+    if (requestActivities?.Items) {
+      if (fetchingNextPage) {
+        setActivities([...activities, ...requestActivities.Items]);
+        setFetchingNextPage(false);
+        return;
+      }
+
+      setActivities(requestActivities.Items);
+    }
+  }, [requestActivities]);
+
   const handleCancelActivate = (activity: ActivityItem) => {
     if (activity.IsCancelled) {
       activateMutation.mutate(activity.Id);
@@ -140,7 +165,14 @@ const Activities: React.FC = () => {
       search: '',
     });
 
-    setFilters({ DateSort: filters.DateSort });
+    setFilters({ ...defaultFilters, DateSort: filters.DateSort });
+  };
+
+  const handleFiltersChange = (newFilters: ActivityFiltersPayload) => {
+    setFilters({
+      ...newFilters,
+      CurrentPage: 1,
+    });
   };
 
   const renderActivityCard = (activity: ActivityItem) => {
@@ -160,7 +192,7 @@ const Activities: React.FC = () => {
   };
 
   const renderActivities = () => {
-    if (isLoading) {
+    if (isLoading && !fetchingNextPage) {
       return (
         <div className={s.activityCards}>
           <Loader />
@@ -177,10 +209,22 @@ const Activities: React.FC = () => {
       );
     }) : _.map(activities, renderActivityCard);
 
+    const endMessage = _.isEmpty(list) ? 'No activities found' : 'You\'re all up to date!';
+
     return (
       <div className={s.activityCards}>
         {renderSortGroup()}
-        {_.isEmpty(list) ? 'Activities not found' : list}
+        <InfiniteScroll
+          style={{ width: '100%' }}
+          dataLength={activities.length}
+          next={handleMore}
+          hasMore={hasMorePages}
+          loader={<div className={s.scrollContent}><Loader /></div>}
+          scrollableTarget="page"
+          endMessage={<div className={s.scrollContent}>{fetchingNextPage ? (<Loader />) : endMessage}</div>}
+        >
+          {list}
+        </InfiniteScroll>
       </div>
     );
   };
@@ -189,6 +233,18 @@ const Activities: React.FC = () => {
     setFilters({
       ...filters,
       DateSort: filters.DateSort === 'Asc' ? 'Desc' : 'Asc',
+      CurrentPage: 1,
+    });
+  };
+
+  const handleMore = () => {
+    if (fetchingNextPage) {
+      return;
+    }
+    setFetchingNextPage(true);
+    setFilters({
+      ...filters,
+      CurrentPage: filters.CurrentPage + 1,
     });
   };
 
@@ -223,13 +279,13 @@ const Activities: React.FC = () => {
         {renderActivities()}
         <ActivityFilters
           filters={filters}
-          onChange={setFilters}
+          onChange={handleFiltersChange}
           onClear={handleClear}
         />
       </div>
       <AddEditActivityModal
         activity={modalActivity}
-        updateListData={() => loadActivities()}
+        updateListData={updateActivities}
       />
     </div>
   );

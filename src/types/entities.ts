@@ -30,3 +30,11 @@ export interface TabItem {
   id: string,
   title: string,
 }
+
+export interface PaginatedList<T> {
+  CurrentPage: number,
+  PageSize: number,
+  TotalPages: number,
+  TotalItems: number,
+  Items: T[],
+}

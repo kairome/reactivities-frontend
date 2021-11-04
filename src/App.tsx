@@ -35,7 +35,7 @@ const App: React.FC = () => {
     return (
       <React.Fragment>
         <Navigation />
-        <div className={s.page}>
+        <div className={s.page} id="page">
           <Routes />
         </div>
       </React.Fragment>

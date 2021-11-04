@@ -19,7 +19,7 @@ import history from 'utils/history';
 
 interface Props {
   activity: ActivityItem | null,
-  updateListData?: () => void,
+  updateListData?: (newAct: ActivityItem) => void,
 }
 
 const defaultPayload = {
@@ -55,7 +55,7 @@ const AddEditActivityModal: React.FC<Props> = (props) => {
       }
 
       if (props.updateListData) {
-        props.updateListData();
+        props.updateListData(data);
         return;
       }
 

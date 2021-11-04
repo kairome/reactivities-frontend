@@ -87,7 +87,7 @@
 .activitiesFooter {
   margin-top: 40px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
 }
 
@@ -114,6 +114,7 @@
   align-items: center;
   box-sizing: border-box;
   padding: 8px 23px;
+  margin-left: 10px;
 }
 
 .activityViewTitle {
@@ -294,4 +295,15 @@
   svg {
     margin-right: 5px;
   }
+}
+
+.scrollContent {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+:global(.infinite-scroll-component__outerdiv) {
+  width: 100%;
+  max-width: 500px;
 }
