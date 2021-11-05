@@ -4,7 +4,7 @@
   switch (env) {
     case 'prod':
       return {
-        ApiUrl: ''
+        ApiUrl: 'https://kairome-reactivities-backend.herokuapp.com/api'
       };
     default:
       return {
