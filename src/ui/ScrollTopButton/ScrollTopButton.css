@@ -1,0 +1,49 @@
+.container {
+  bottom: 20px;
+  right: 40px;
+  z-index: 11;
+  animation: bounce infinite 1s ease-in-out;
+}
+
+.absoluteContainer {
+  composes: container;
+  position: absolute;
+}
+
+.fixedContainer {
+  composes: container;
+  position: fixed;
+}
+
+.btn {
+  border: 1px solid var(--grape);
+  background: var(--whiteText);
+  border-radius: 4px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 20px;
+  color: var(--grape);
+  cursor: pointer;
+  transition: all .3s ease-in;
+  width: 50px;
+  height: 50px;
+
+  &:hover {
+    background: var(--grape);
+    color: var(--whiteText);
+  }
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(20px);
+  }
+
+  70% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(20px);
+  }
+}

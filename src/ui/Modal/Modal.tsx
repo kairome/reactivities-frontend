@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { useModal } from 'recoil/modalsState';
 
 import s from './Modal.css';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import useModal from 'hooks/useModal';
 
 interface Props {
   title: string,

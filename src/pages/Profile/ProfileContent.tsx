@@ -21,10 +21,6 @@ const ProfileContent: React.FC = () => {
       id: 'photos',
       title: 'Photos',
     },
-    {
-      id: 'events',
-      title: 'Events',
-    },
   ];
 
   return (

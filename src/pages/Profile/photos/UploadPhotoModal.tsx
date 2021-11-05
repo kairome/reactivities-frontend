@@ -14,8 +14,8 @@ import { useAlert } from 'recoil/alertState';
 import handleApiErrors from 'api/handleApiErrors';
 import handleApiSuccess from 'api/handleApiSuccess';
 import { fetchCurrentUser } from 'api/account';
-import { useModal } from 'recoil/modalsState';
 import useQueryUpdate from 'api/useQueryUpdate';
+import useModal from 'hooks/useModal';
 
 const modalKey = 'uploadProfilePhoto';
 

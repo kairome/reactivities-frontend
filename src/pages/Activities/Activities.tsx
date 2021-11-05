@@ -13,7 +13,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import activitiesFormState from 'recoil/activitiesFormState';
 import Loader from 'ui/Loader/Loader';
-import { useModal } from 'recoil/modalsState';
 
 import ActivityFilters from 'pages/Activities/ActivityFilters';
 import Checkbox from 'ui/Checkbox/Checkbox';
@@ -28,6 +27,8 @@ import history from 'utils/history';
 import TabTitle from 'ui/TabTitle/TabTitle';
 import { PaginatedList } from 'types/entities';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import useModal from 'hooks/useModal';
+import ScrollTopButton from 'ui/ScrollTopButton/ScrollTopButton';
 
 dayjs.extend(relativeTime);
 
@@ -287,6 +288,7 @@ const Activities: React.FC = () => {
         activity={modalActivity}
         updateListData={updateActivities}
       />
+      <ScrollTopButton />
     </div>
   );
 };

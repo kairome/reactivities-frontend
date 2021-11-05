@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './App.css';
 import Routes from 'routes';
 import Navigation from 'ui/Navigation/Navigation';
@@ -13,10 +13,13 @@ import { fetchCurrentUser } from 'api/account';
 import Loader from 'ui/Loader/Loader';
 import { useSetRecoilState } from 'recoil';
 import { currentUserState } from 'recoil/user';
+import ScrollTopProvider from 'context/ScrollTopProvider';
 
 const App: React.FC = () => {
   const { data: currentUser, isLoading } = useQuery(fetchCurrentUser.name, fetchCurrentUser.request);
   const setCurrentUser = useSetRecoilState(currentUserState);
+
+  const pageRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setCurrentUser(currentUser);
@@ -35,9 +38,11 @@ const App: React.FC = () => {
     return (
       <React.Fragment>
         <Navigation />
-        <div className={s.page} id="page">
-          <Routes />
-        </div>
+        <ScrollTopProvider containerRef={pageRef}>
+          <div className={s.page} id="page" ref={pageRef}>
+            <Routes />
+          </div>
+        </ScrollTopProvider>
       </React.Fragment>
     );
   };

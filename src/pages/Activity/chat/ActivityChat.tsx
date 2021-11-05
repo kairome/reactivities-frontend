@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityComment } from 'types/activity';
-import useChatSignalr from 'utils/useChatSignalr';
+import useChatSignalr from 'hooks/useChatSignalr';
 
 import s from './ActivityChat.css';
 import _ from 'lodash';
@@ -14,6 +14,8 @@ import Button from 'ui/Button/Button';
 import { InputEvent } from 'types/entities';
 import { useMutation } from 'react-query';
 import { addActivityComment } from 'api/activities';
+import ScrollTopProvider from 'context/ScrollTopProvider';
+import ScrollTopButton from 'ui/ScrollTopButton/ScrollTopButton';
 
 interface Props {
   activityId: string,
@@ -109,28 +111,31 @@ const ActivityChat: React.FC<Props> = (props) => {
 
   return (
     <React.Fragment>
-      <div className={s.chatContainer}>
-        <div className={s.chat} ref={chatContainer}>
-          {renderComments()}
+      <ScrollTopProvider containerRef={chatContainer}>
+        <div className={s.chatContainer}>
+          <div className={s.chat} ref={chatContainer}>
+            {renderComments()}
+          </div>
+          <div className={s.chatMessageInputContainer}>
+            <ScrollTopButton position="absolute" className={s.scrollBtn} />
+            <Input
+              type="text"
+              label="Send a message for this activity"
+              value={messageText}
+              onChange={handleMessageChange}
+              onKeyDown={handleKeyDown}
+              textArea
+            />
+            <Button
+              theme="action"
+              text="Send"
+              disabled={!messageText.trim()}
+              onClick={handleSendMessage}
+              isLoading={sendMessageMutation.isLoading}
+            />
+          </div>
         </div>
-        <div className={s.chatMessageInputContainer}>
-          <Input
-            type="text"
-            label="Send a message for this activity"
-            value={messageText}
-            onChange={handleMessageChange}
-            onKeyDown={handleKeyDown}
-            textArea
-          />
-          <Button
-            theme="action"
-            text="Send"
-            disabled={!messageText.trim()}
-            onClick={handleSendMessage}
-            isLoading={sendMessageMutation.isLoading}
-          />
-        </div>
-      </div>
+      </ScrollTopProvider>
     </React.Fragment>
   );
 };

@@ -19,7 +19,7 @@ import AttendeesDropdown from 'pages/Activities/AttendeesDropdown';
 import { Link } from 'react-router-dom';
 import history from 'utils/history';
 import UserProfileModal from 'ui/UserProfileCard/UserProfileModal';
-import { useModal } from 'recoil/modalsState';
+import useModal from 'hooks/useModal';
 
 interface Props {
   activity: ActivityItem,

@@ -4,7 +4,7 @@ import Button from 'ui/Button/Button';
 import s from './Toolbar.css';
 import { useSetRecoilState } from 'recoil';
 import activitiesFormState from 'recoil/activitiesFormState';
-import { useModal } from 'recoil/modalsState';
+import useModal from 'hooks/useModal';
 
 const ActivitiesToolbar: React.FC = () => {
   const setFormState = useSetRecoilState(activitiesFormState);

@@ -7,10 +7,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import s from './Activities.css';
 import Dropdown from 'ui/Dropdown/Dropdown';
 import UserProfileModal from 'ui/UserProfileCard/UserProfileModal';
-import { useModal } from 'recoil/modalsState';
 import { useRecoilValue } from 'recoil';
 import { currentUserState } from 'recoil/user';
 import history from 'utils/history';
+import useModal from 'hooks/useModal';
 
 interface Props {
   attendees: ActivityAttendee[],

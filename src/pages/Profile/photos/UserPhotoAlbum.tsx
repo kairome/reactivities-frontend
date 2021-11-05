@@ -16,9 +16,9 @@ import { fetchCurrentUser } from 'api/account';
 import handleApiErrors from 'api/handleApiErrors';
 import Loader from 'ui/Loader/Loader';
 import ConfirmationModal from 'ui/ConfirmationModal/ConfirmationModal';
-import { useModal } from 'recoil/modalsState';
 import useQueryUpdate from 'api/useQueryUpdate';
-import useOutsideClick from 'utils/useOutsideClick';
+import useOutsideClick from 'hooks/useOutsideClick';
+import useModal from 'hooks/useModal';
 
 const UserPhotoAlbum: React.FC = () => {
   const { spawnAlert } = useAlert();

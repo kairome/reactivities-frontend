@@ -6,7 +6,6 @@ import { createEditActivity, fetchActivity } from 'api/activities';
 import Input from 'ui/Input/Input';
 
 import s from './Activities.css';
-import { useModal } from 'recoil/modalsState';
 import Modal from 'ui/Modal/Modal';
 import { useAlert } from 'recoil/alertState';
 
@@ -16,6 +15,7 @@ import { ValidationErrors } from 'types/entities';
 
 import DateInput from 'ui/DateInput/DateInput';
 import history from 'utils/history';
+import useModal from 'hooks/useModal';
 
 interface Props {
   activity: ActivityItem | null,

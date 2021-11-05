@@ -16,13 +16,13 @@ import { CurrentUser, UserActivitiesStats } from 'types/user';
 import { fetchCurrentUser } from 'api/account';
 import ProfileContent from 'pages/Profile/ProfileContent';
 import UploadPhotoModal from 'pages/Profile/photos/UploadPhotoModal';
-import { useModal } from 'recoil/modalsState';
 import useQueryUpdate from 'api/useQueryUpdate';
 import NotFound from 'ui/NotFound/NotFound';
 import Loader from 'ui/Loader/Loader';
 import { Link } from 'react-router-dom';
 import TabTitle from 'ui/TabTitle/TabTitle';
 import fetchUserActivitiesStats from 'api/user/fetchUserActivitiesStats';
+import useModal from 'hooks/useModal';
 
 const defaultEditState = {
   name: false,

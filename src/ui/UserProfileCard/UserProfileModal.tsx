@@ -5,9 +5,9 @@ import Loader from 'ui/Loader/Loader';
 import { useQuery } from 'react-query';
 import { fetchUserProfile } from 'api/user';
 import Button from 'ui/Button/Button';
-import { useModal } from 'recoil/modalsState';
 import { UserActivitiesStats } from 'types/user';
 import fetchUserActivitiesStats from 'api/user/fetchUserActivitiesStats';
+import useModal from 'hooks/useModal';
 
 interface Props {
   userId: string,

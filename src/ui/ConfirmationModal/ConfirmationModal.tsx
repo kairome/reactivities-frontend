@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import Modal from 'ui/Modal/Modal';
-import { useModal } from 'recoil/modalsState';
 import Button from 'ui/Button/Button';
 import s from './ConfirmationModal.css';
+import useModal from 'hooks/useModal';
 
 interface Props {
   modalKey: string,

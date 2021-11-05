@@ -18,7 +18,6 @@ import s from './Activity.css';
 import Breadcrumbs from 'ui/Breadcrumbs/Breadcrumbs';
 import Button from 'ui/Button/Button';
 import AddEditActivityModal from 'pages/Activities/AddEditActivityModal';
-import { useModal } from 'recoil/modalsState';
 import { faMapMarkerAlt, faCalendar, faTag, faUserAlt, faBan } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -34,6 +33,7 @@ import ConfirmationModal from 'ui/ConfirmationModal/ConfirmationModal';
 import ActivityChat from 'pages/Activity/chat/ActivityChat';
 import NotFound from 'ui/NotFound/NotFound';
 import TabTitle from 'ui/TabTitle/TabTitle';
+import useModal from 'hooks/useModal';
 
 const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
   const { id } = props.match.params;

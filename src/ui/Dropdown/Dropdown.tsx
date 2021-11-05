@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import s from './Dropdown.css';
 import _ from 'lodash';
-import useOutsideClick from 'utils/useOutsideClick';
+import useOutsideClick from 'hooks/useOutsideClick';
 
 interface Props {
   renderDropdownControl: () => React.ReactNode,

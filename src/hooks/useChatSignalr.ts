@@ -1,4 +1,4 @@
-import useSignalr from 'utils/useSignalr';
+import useSignalr from './useSignalr';
 import { useEffect } from 'react';
 
 const useChatSignalr = (activityId: string) => {

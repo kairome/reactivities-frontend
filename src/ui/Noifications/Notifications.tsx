@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import useNotificationsSignalr from 'utils/useNotificationsSignalr';
+import useNotificationsSignalr from 'hooks/useNotificationsSignalr';
 import { useRecoilValue } from 'recoil';
 import { currentUserState } from 'recoil/user';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,7 +7,7 @@ import { faBell } from '@fortawesome/free-solid-svg-icons';
 import s from './Notifications.css';
 import { CurrentUser, UserNotification, UserNotificationType } from 'types/user';
 import _ from 'lodash';
-import useOutsideClick from 'utils/useOutsideClick';
+import useOutsideClick from 'hooks/useOutsideClick';
 import { useMutation } from 'react-query';
 import { clearAllNotifications, clearNotification, markNotificationAsRead } from 'api/notifications';
 import handleApiErrors from 'api/handleApiErrors';
@@ -15,7 +15,7 @@ import { useAlert } from 'recoil/alertState';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import classNames from 'classnames';
-import useBrowserNotifications from 'utils/useBrowserNotifications';
+import useBrowserNotifications from 'hooks/useBrowserNotifications';
 
 const Notifications: React.FC = () => {
   const currentUser = useRecoilValue(currentUserState);
