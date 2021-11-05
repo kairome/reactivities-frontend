@@ -11,11 +11,12 @@ import { useAlert } from 'recoil/alertState';
 
 import handleApiErrors from 'api/handleApiErrors';
 import handleApiSuccess from 'api/handleApiSuccess';
-import { ValidationErrors } from 'types/entities';
+import { ApiError, ValidationErrors } from 'types/entities';
 
 import DateInput from 'ui/DateInput/DateInput';
 import history from 'utils/history';
 import useModal from 'hooks/useModal';
+import dayjs from 'dayjs';
 
 interface Props {
   activity: ActivityItem | null,
@@ -26,7 +27,7 @@ const defaultPayload = {
   Title: '',
   Description: '',
   Category: '',
-  Date: '',
+  Date: dayjs().format('YYYY-MM-DD[T]HH:mm:ss'),
   City: '',
   Venue: '',
 };
@@ -61,12 +62,12 @@ const AddEditActivityModal: React.FC<Props> = (props) => {
 
       queryClient.setQueryData<ActivityItem>([fetchActivity.name, editPayload.Id], data);
     },
-    onError: (error: any) => {
-      if (error.errors) {
-        setFormErrors(error.errors);
+    onError: (error: ApiError) => {
+      if (error.data.errors) {
+        setFormErrors(error.data.errors);
       }
 
-      handleApiErrors(error.Message, `Failed to ${activity ? 'edit' : 'create'} activity`, spawnAlert);
+      handleApiErrors(error, `Failed to ${activity ? 'edit' : 'create'} activity`, spawnAlert);
     },
   });
 

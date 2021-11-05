@@ -16,6 +16,7 @@ import handleApiSuccess from 'api/handleApiSuccess';
 import { fetchCurrentUser } from 'api/account';
 import useQueryUpdate from 'api/useQueryUpdate';
 import useModal from 'hooks/useModal';
+import { ApiError } from 'types/entities';
 
 const modalKey = 'uploadProfilePhoto';
 
@@ -40,8 +41,8 @@ const UploadPhotoModal: React.FC = () => {
       setCroppedCanvas(null);
       closeModal();
     },
-    onError: (err: any) => {
-      handleApiErrors(err.Message, 'Failed to upload profile photo', spawnAlert);
+    onError: (err: ApiError) => {
+      handleApiErrors(err, 'Failed to upload profile photo', spawnAlert);
     },
   });
 

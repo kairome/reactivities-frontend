@@ -83,7 +83,7 @@ const ActivityChat: React.FC<Props> = (props) => {
       const profileSrc = comment.AuthorProfileUrl ?? '/assets/default.jpeg';
       const date = dayjs(comment.CreatedAt);
 
-      const isAuthor = currentUser.Id === comment.AuthorId;
+      const isAuthor = currentUser!.Id === comment.AuthorId;
       const userName = isAuthor ? 'You' : comment.AuthorName;
 
       return (

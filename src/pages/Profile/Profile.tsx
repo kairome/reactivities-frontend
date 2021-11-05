@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { faFileUpload, faPenSquare } from '@fortawesome/free-solid-svg-icons';
 import Input from 'ui/Input/Input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { InputEvent, InputEventElement, ValidationErrors } from 'types/entities';
+import { ApiError, InputEvent, InputEventElement, ValidationErrors } from 'types/entities';
 import { useMutation, useQuery } from 'react-query';
 import { updateUserProfile } from 'api/user';
 import handleApiErrors from 'api/handleApiErrors';
@@ -61,12 +61,12 @@ const Profile: React.FC = () => {
       updateQuery(fetchCurrentUser.name, data);
       resetEditState();
     },
-    onError: (err: any) => {
-      if (err.errors) {
-        setFormErrors(err.errors);
+    onError: (err: ApiError) => {
+      if (err.data.errors) {
+        setFormErrors(err.data.errors);
       }
 
-      handleApiErrors(err.Message, 'Failed to update user profile', spawnAlert);
+      handleApiErrors(err, 'Failed to update user profile', spawnAlert);
     },
   });
 

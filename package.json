@@ -106,6 +106,7 @@
     "build": "NODE_ENV=production webpack --progress",
     "lint": "eslint src/ --ext .ts,.tsx",
     "fix-lint": "yarn lint --fix",
+    "check-types": "tsc --noEmit",
     "test": "node scripts/test.js"
   },
   "browserslist": {

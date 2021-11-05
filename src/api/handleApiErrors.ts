@@ -1,9 +1,10 @@
-import { SpawnAlert } from 'types/entities';
+import { ApiError, SpawnAlert } from 'types/entities';
 
-export default (errorMsg: string, defaultMsg: string, spawnAlert: SpawnAlert) => {
+export default (error: ApiError, defaultMsg: string, spawnAlert: SpawnAlert) => {
+  const { data } = error;
   spawnAlert({
     type: 'error',
-    title: errorMsg ? errorMsg : defaultMsg,
+    title: data.Message ? data.Message : defaultMsg,
     timeout: 5,
   });
 };

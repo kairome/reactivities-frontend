@@ -19,6 +19,7 @@ import ConfirmationModal from 'ui/ConfirmationModal/ConfirmationModal';
 import useQueryUpdate from 'api/useQueryUpdate';
 import useOutsideClick from 'hooks/useOutsideClick';
 import useModal from 'hooks/useModal';
+import { ApiError } from 'types/entities';
 
 const UserPhotoAlbum: React.FC = () => {
   const { spawnAlert } = useAlert();
@@ -35,8 +36,8 @@ const UserPhotoAlbum: React.FC = () => {
       setCurrentPhoto(null);
       handleApiSuccess('Profile photo set!', spawnAlert);
     },
-    onError: (err: any) => {
-      handleApiErrors(err.Message, 'Failed to set profile photo', spawnAlert);
+    onError: (err: ApiError) => {
+      handleApiErrors(err, 'Failed to set profile photo', spawnAlert);
     },
   });
 
@@ -46,8 +47,8 @@ const UserPhotoAlbum: React.FC = () => {
       setCurrentPhoto(null);
       handleApiSuccess('Photo deleted!', spawnAlert);
     },
-    onError: (err: any) => {
-      handleApiErrors(err.Message, 'Failed to delete photo', spawnAlert);
+    onError: (err: ApiError) => {
+      handleApiErrors(err, 'Failed to delete photo', spawnAlert);
     },
   });
 

@@ -25,7 +25,7 @@ import handleApiSuccess from 'api/handleApiSuccess';
 import handleApiErrors from 'api/handleApiErrors';
 import history from 'utils/history';
 import TabTitle from 'ui/TabTitle/TabTitle';
-import { PaginatedList } from 'types/entities';
+import { ApiError, PaginatedList } from 'types/entities';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import useModal from 'hooks/useModal';
 import ScrollTopButton from 'ui/ScrollTopButton/ScrollTopButton';
@@ -47,7 +47,9 @@ const Activities: React.FC = () => {
   const [groupByDate, setGroupByDate] = useState(false);
 
   const { data: requestActivities, isLoading } = useQuery<PaginatedList<ActivityItem>>(
-    [fetchActivities.name, filters], () => fetchActivities.request(filters));
+    [fetchActivities.name, filters], () => fetchActivities.request(filters), {
+      cacheTime: 0,
+    });
 
   const [activities, setActivities] = useState<ActivityItem[]>([]);
   const [fetchingNextPage, setFetchingNextPage] = useState(false);
@@ -73,8 +75,8 @@ const Activities: React.FC = () => {
       updateActivities(data);
       handleApiSuccess('Activity activated!', spawnAlert);
     },
-    onError: (error: any) => {
-      handleApiErrors(error.Message, 'Cannot activate the activity', spawnAlert);
+    onError: (error: ApiError) => {
+      handleApiErrors(error, 'Cannot activate the activity', spawnAlert);
     },
   });
 
@@ -83,8 +85,8 @@ const Activities: React.FC = () => {
       updateActivities(data);
       handleApiSuccess('Activity canceled!', spawnAlert);
     },
-    onError: (error: any) => {
-      handleApiErrors(error.Message, 'Cannot cancel the activity', spawnAlert);
+    onError: (error: ApiError) => {
+      handleApiErrors(error, 'Cannot cancel the activity', spawnAlert);
     },
   });
 
@@ -93,8 +95,8 @@ const Activities: React.FC = () => {
       updateActivities(data);
       handleApiSuccess('Activity followed!', spawnAlert);
     },
-    onError: (err: any) => {
-      handleApiErrors(err.Message, 'Cannot follow activity', spawnAlert);
+    onError: (err: ApiError) => {
+      handleApiErrors(err, 'Cannot follow activity', spawnAlert);
     },
   });
 
@@ -103,14 +105,17 @@ const Activities: React.FC = () => {
       updateActivities(data);
       handleApiSuccess('Activity unfollowed!', spawnAlert);
     },
-    onError: (err: any) => {
-      handleApiErrors(err.Message, 'Cannot unfollow activity', spawnAlert);
+    onError: (err: ApiError) => {
+      handleApiErrors(err, 'Cannot unfollow activity', spawnAlert);
     },
   });
 
   const groupedActivities = useMemo(() => {
     return _.groupBy(activities, a => dayjs(a.Date).format('YYYY-MM-DD'));
   }, [activities]);
+
+  useEffect(() => {
+  }, []);
 
   useEffect(() => {
     if (formType === 'add' && modalActivity !== null) {
@@ -183,7 +188,7 @@ const Activities: React.FC = () => {
       <ActivityCard
         key={activity.Id}
         activity={activity}
-        currentUserId={currentUser.Id}
+        currentUserId={currentUser!.Id}
         onEdit={handleEditActivity}
         onCancelActivate={handleCancelActivate}
         onFollowUnfollow={handleFollowUnfollow}
@@ -216,7 +221,7 @@ const Activities: React.FC = () => {
       <div className={s.activityCards}>
         {renderSortGroup()}
         <InfiniteScroll
-          style={{ width: '100%' }}
+          style={{ width: '100%', overflow: 'initial' }}
           dataLength={activities.length}
           next={handleMore}
           hasMore={hasMorePages}

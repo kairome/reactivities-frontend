@@ -34,6 +34,7 @@ import ActivityChat from 'pages/Activity/chat/ActivityChat';
 import NotFound from 'ui/NotFound/NotFound';
 import TabTitle from 'ui/TabTitle/TabTitle';
 import useModal from 'hooks/useModal';
+import { ApiError } from 'types/entities';
 
 const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
   const { id } = props.match.params;
@@ -58,8 +59,8 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
       handleApiSuccess('Activity deleted!', spawnAlert);
       history.push('/');
     },
-    onError: (error: any) => {
-      handleApiErrors(error.Message, 'Failed to delete activity', spawnAlert);
+    onError: (error: ApiError) => {
+      handleApiErrors(error, 'Failed to delete activity', spawnAlert);
     },
   });
 
@@ -68,8 +69,8 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
       handleApiSuccess('Attending this activity!', spawnAlert);
       loadActivity();
     },
-    onError: (error: any) => {
-      handleApiErrors(error.Message, 'Cannot attend the activity', spawnAlert);
+    onError: (error: ApiError) => {
+      handleApiErrors(error, 'Cannot attend the activity', spawnAlert);
     },
   });
 
@@ -78,8 +79,8 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
       handleApiSuccess('Left this activity!', spawnAlert);
       loadActivity();
     },
-    onError: (error: any) => {
-      handleApiErrors(error.Message, 'Cannot leave the activity', spawnAlert);
+    onError: (error: ApiError) => {
+      handleApiErrors(error, 'Cannot leave the activity', spawnAlert);
     },
   });
 
@@ -88,8 +89,8 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
       handleApiSuccess('Activity activated!', spawnAlert);
       loadActivity();
     },
-    onError: (error: any) => {
-      handleApiErrors(error.Message, 'Cannot activate the activity', spawnAlert);
+    onError: (error: ApiError) => {
+      handleApiErrors(error, 'Cannot activate the activity', spawnAlert);
     },
   });
 
@@ -98,8 +99,8 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
       handleApiSuccess('Activity canceled!', spawnAlert);
       loadActivity();
     },
-    onError: (error: any) => {
-      handleApiErrors(error.Message, 'Cannot cancel the activity', spawnAlert);
+    onError: (error: ApiError) => {
+      handleApiErrors(error, 'Cannot cancel the activity', spawnAlert);
     },
   });
 
@@ -108,8 +109,8 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
       loadActivity();
       handleApiSuccess('Activity followed!', spawnAlert);
     },
-    onError: (err: any) => {
-      handleApiErrors(err.Message, 'Cannot follow activity', spawnAlert);
+    onError: (err: ApiError) => {
+      handleApiErrors(err, 'Cannot follow activity', spawnAlert);
     },
   });
 
@@ -118,8 +119,8 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
       loadActivity();
       handleApiSuccess('Activity unfollowed!', spawnAlert);
     },
-    onError: (err: any) => {
-      handleApiErrors(err.Message, 'Cannot unfollow activity', spawnAlert);
+    onError: (err: ApiError) => {
+      handleApiErrors(err, 'Cannot unfollow activity', spawnAlert);
     },
   });
 
@@ -140,7 +141,7 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
   };
 
   const handleAttendeeClick = (id: string) => {
-    if (id === currentUser.Id) {
+    if (id === currentUser!.Id) {
       history.push('/profile');
       return;
     }
@@ -199,7 +200,7 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
       return null;
     }
 
-    const alreadyAttending = _.find(activity.Attendees, a => a.UserId === currentUser.Id);
+    const alreadyAttending = _.find(activity.Attendees, a => a.UserId === currentUser!.Id);
 
     if (alreadyAttending) {
       return (
@@ -231,7 +232,7 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
       return null;
     }
 
-    const follower = _.find(activity.Followers, f => f.UserId === currentUser.Id);
+    const follower = _.find(activity.Followers, f => f.UserId === currentUser!.Id);
     const following = !_.isEmpty(follower);
 
     return (
@@ -291,7 +292,7 @@ const Activity: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
 
   const renderAttendees = () => {
     const list = _.map(activity.Attendees, (attendee) => {
-      const name = attendee.UserId === currentUser.Id ? 'You' : attendee.Name;
+      const name = attendee.UserId === currentUser!.Id ? 'You' : attendee.Name;
       const following = _.find(activity.Followers, f => f.UserId === attendee.UserId);
       return (
         <div key={attendee.UserId} className={s.attendee} onClick={() => handleAttendeeClick(attendee.UserId)}>

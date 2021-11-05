@@ -3,7 +3,7 @@ import Input from 'ui/Input/Input';
 import { useMutation } from 'react-query';
 import { register } from 'api/account';
 import handleApiErrors from 'api/handleApiErrors';
-import { ValidationErrors } from 'types/entities';
+import { ApiError, ValidationErrors } from 'types/entities';
 import { useAlert } from 'recoil/alertState';
 import {  RegisterPayload } from 'types/account';
 import Button from 'ui/Button/Button';
@@ -27,12 +27,12 @@ const RegisterForm: React.FC<Props> = (props) => {
       spawnAlert({ type: 'success', title: 'Account created!' });
       props.onSucces();
     },
-    onError: (error: any) => {
-      if (error.errors) {
-        setFormErrors(error.errors);
+    onError: (error: ApiError) => {
+      if (error.data.errors) {
+        setFormErrors(error.data.errors);
       }
 
-      handleApiErrors(error.Message, 'Failed to register', spawnAlert);
+      handleApiErrors(error, 'Failed to register', spawnAlert);
     },
   });
 

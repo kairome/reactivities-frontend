@@ -14,9 +14,17 @@ import Loader from 'ui/Loader/Loader';
 import { useSetRecoilState } from 'recoil';
 import { currentUserState } from 'recoil/user';
 import ScrollTopProvider from 'context/ScrollTopProvider';
+import history from 'utils/history';
+import { ApiError } from 'types/entities';
 
 const App: React.FC = () => {
-  const { data: currentUser, isLoading } = useQuery(fetchCurrentUser.name, fetchCurrentUser.request);
+  const { data: currentUser, isLoading } = useQuery(fetchCurrentUser.name, fetchCurrentUser.request, {
+    onError: (err: ApiError) => {
+      if (err.status === 404) {
+        history.push('/auth');
+      }
+    },
+  });
   const setCurrentUser = useSetRecoilState(currentUserState);
 
   const pageRef = useRef<HTMLDivElement | null>(null);
@@ -26,7 +34,7 @@ const App: React.FC = () => {
   }, [currentUser]);
 
   const renderAppRoutes = () => {
-    if (isLoading) {
+    if (isLoading || !currentUser) {
       return (
         <div className={s.pageLoader}>
           <Loader size="xxl" />

@@ -262,6 +262,10 @@
   align-items: baseline;
   cursor: pointer;
 
+  &:last-child {
+    margin-bottom: 0;
+  }
+
   &:hover {
     .attendeeName {
       border-color: var(--mustardBrown);

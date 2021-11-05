@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import classNames from 'classnames';
 import useBrowserNotifications from 'hooks/useBrowserNotifications';
+import { ApiError } from 'types/entities';
 
 const Notifications: React.FC = () => {
   const currentUser = useRecoilValue(currentUserState);
@@ -23,7 +24,7 @@ const Notifications: React.FC = () => {
 
   const { spawnNotification } = useBrowserNotifications();
 
-  const hubConnection = useNotificationsSignalr(currentUser?.Id);
+  const hubConnection = useNotificationsSignalr(currentUser?.Id ?? '');
   const [showNotifications, setShowNotifications] = useState(false);
 
   const [allNotifications, setAllNotifications] = useState<UserNotification[]>([]);
@@ -34,8 +35,8 @@ const Notifications: React.FC = () => {
     onSuccess: () => {
       setAllNotifications([]);
     },
-    onError: (err: any) => {
-      handleApiErrors(err.Message, 'Failed to clear notifications', spawnAlert);
+    onError: (err: ApiError) => {
+      handleApiErrors(err, 'Failed to clear notifications', spawnAlert);
     },
   });
 
@@ -43,8 +44,8 @@ const Notifications: React.FC = () => {
     onSuccess: (data: CurrentUser) => {
       setAllNotifications(data.Notifications);
     },
-    onError: (err: any) => {
-      handleApiErrors(err.Message, 'Failed to clear notification', spawnAlert);
+    onError: (err: ApiError) => {
+      handleApiErrors(err, 'Failed to clear notification', spawnAlert);
     },
   });
 
@@ -52,8 +53,8 @@ const Notifications: React.FC = () => {
     onSuccess: (data: CurrentUser) => {
       setAllNotifications(data.Notifications);
     },
-    onError: (err: any) => {
-      handleApiErrors(err.Message, 'Failed to mark notification as read', spawnAlert);
+    onError: (err: ApiError) => {
+      handleApiErrors(err, 'Failed to mark notification as read', spawnAlert);
     },
   });
 

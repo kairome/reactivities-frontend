@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Input from 'ui/Input/Input';
 import Button from 'ui/Button/Button';
 import { LoginPayload } from 'types/account';
-import { ValidationErrors } from 'types/entities';
+import { ApiError, ValidationErrors } from 'types/entities';
 import { useAlert } from 'recoil/alertState';
 import { useMutation, useQuery } from 'react-query';
 import { fetchCurrentUser, login } from 'api/account';
@@ -27,12 +27,12 @@ const LoginForm: React.FC = () => {
       loadCurrentUser();
       history.push('/');
     },
-    onError: (error: any) => {
-      if (error.errors) {
-        setFormErrors(error.errors);
+    onError: (error: ApiError) => {
+      if (error.data.errors) {
+        setFormErrors(error.data.errors);
       }
 
-      handleApiErrors(error.Message, 'Failed to login', spawnAlert);
+      handleApiErrors(error, 'Failed to login', spawnAlert);
     },
   });
 

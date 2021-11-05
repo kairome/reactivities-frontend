@@ -15,7 +15,7 @@ const useSignalr = (url?: string) => {
     }
 
     const hubConnection = new HubConnectionBuilder()
-      .withUrl(`http://localhost:5000/api/signalr/${connectionUrl}`)
+      .withUrl(`${process.env.API_URL}/signalr/${connectionUrl}`)
       .configureLogging(LogLevel.Information)
       .withAutomaticReconnect()
       .build();

@@ -38,3 +38,8 @@ export interface PaginatedList<T> {
   TotalItems: number,
   Items: T[],
 }
+
+export interface ApiError {
+  data: { errors?: ValidationErrors, Message?: string, },
+  status: number,
+}

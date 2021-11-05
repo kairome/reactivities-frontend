@@ -23,7 +23,7 @@ const AttendeesDropdown: React.FC<Props> = (props) => {
   const { showModal } = useModal('');
 
   const handleAttendeeClick = (id: string) => {
-    if (currentUser.Id === id) {
+    if (currentUser!.Id === id) {
       history.push('/profile');
       return;
     }
@@ -34,7 +34,7 @@ const AttendeesDropdown: React.FC<Props> = (props) => {
 
   const renderList = () => {
     return _.map(attendees, (attendee) => {
-      const youText = attendee.UserId === currentUser.Id ? ' (you)' : null;
+      const youText = attendee.UserId === currentUser!.Id ? ' (you)' : null;
 
       return (
         <div key={attendee.UserId} className={s.attendeeItem} onClick={() => handleAttendeeClick(attendee.UserId)}>

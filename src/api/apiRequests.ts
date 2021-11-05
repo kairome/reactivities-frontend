@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig, Method } from 'axios';
 import history from 'utils/history';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: process.env.API_URL,
   timeout: 10000,
   withCredentials: true,
   headers: {
@@ -32,7 +32,7 @@ const makeRequest = (method: Method) => async <T>(url: string, payload?: T) => {
       history.push('/auth');
     }
 
-    throw data;
+    throw { data, status };
   }
 };
 

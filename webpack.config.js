@@ -1,10 +1,16 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 const path = require('path');
 
 const port = 3000;
+
+const dotenv = require('dotenv');
+dotenv.config();
+
+const config = require('./config');
 
 const devMode = process.env.NODE_ENV !== 'production';
 
@@ -100,7 +106,7 @@ const clientConfig = {
   devServer: {
     port,
     historyApiFallback: true,
-    hot: true,
+    hot: true
   },
   plugins: [
     new MiniCssExtractPlugin({
@@ -121,6 +127,13 @@ const clientConfig = {
       filename: 'index.html',
       inject: 'body',
     }),
+    new webpack.DefinePlugin({
+      process: {
+        env: {
+          API_URL: JSON.stringify(config.ApiUrl),
+        },
+      },
+    })
   ],
 };
 
