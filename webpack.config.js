@@ -2,6 +2,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const path = require('path');
 
@@ -14,6 +15,11 @@ const config = require('./config');
 
 const devMode = process.env.NODE_ENV !== 'production';
 
+const optimizationOptions = {
+  minimize: true,
+    minimizer: [new TerserPlugin({})],
+};
+
 const clientConfig = {
   entry: ['./src/index.tsx'],
   output: {
@@ -22,7 +28,7 @@ const clientConfig = {
     publicPath: '/',
   },
   target: 'web',
-  mode: 'development',
+  mode: process.env.NODE_ENV,
   module: {
     rules: [
       {
@@ -108,6 +114,7 @@ const clientConfig = {
     historyApiFallback: true,
     hot: true
   },
+  optimization: devMode ? undefined : optimizationOptions,
   plugins: [
     new MiniCssExtractPlugin({
       ignoreOrder: true,
