@@ -8,10 +8,7 @@
     "react"
   ],
   "ignorePatterns": [
-    "webpack.config.js",
-    "babel.config.js",
-    "postcss.config.js",
-    "config.js"
+    "*.js"
   ],
   "env": {
     "browser": true,
