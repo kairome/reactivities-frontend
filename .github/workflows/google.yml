@@ -14,8 +14,8 @@ name: google
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - '*'
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
