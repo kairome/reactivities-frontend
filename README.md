@@ -3,7 +3,7 @@
 
 # Reactivities - Frontend
 
-See the app in action by visiting [reactivities.artem-dev.com](http://reactivities.artem-dev.com)
+See the app in action by visiting [artem-dev.com](https://artem-dev.com)
 
 You will need to register to access the app, no email required. Just a username that is not already in use and a password.
 
