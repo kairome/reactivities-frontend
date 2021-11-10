@@ -60,4 +60,4 @@ jobs:
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
-        gcloud compute ssh --zone $ZONE $INSTANCE_NAME --command 'cd /deploy && docker-compose stop && docker-compose up -d'
+        gcloud compute ssh --zone $ZONE $INSTANCE_NAME --command 'cd /deploy && sudo docker-compose stop && sudo docker-compose up -d'
